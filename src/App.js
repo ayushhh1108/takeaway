@@ -33,7 +33,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>
-            <Route path="/" element={<MainPage />} >
+            <Route path="/" element={<LoginPage />} >
               <Route path='/Terms-Conditions' element={<TermsConditions />} />
             </Route>
             <Route path="/login" exact element={<LoginPage />} />
