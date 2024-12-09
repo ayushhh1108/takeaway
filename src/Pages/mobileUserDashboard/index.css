@@ -1,0 +1,119 @@
+.upper-side {
+  padding-top: 10px;
+}
+.main-container {
+  background-color: #eee3cfd6;
+  min-height: 110vh;
+}
+.dashboard-text {
+  font-family: oswald !important;
+  color: #000000;
+  font-size: 22px !important;
+  font-weight: 500 !important;
+}
+.menuPng {
+  width: 35px;
+}
+.profile-img {
+  width: 32px;
+}
+.top-bar {
+  padding: 0 12px;
+  display: flex;
+  height: 38px;
+  justify-content: space-between;
+  align-items: center;
+}
+.total-erning {
+  width: 92%;
+  margin: 20px auto;
+  height: 100px;
+  background-color: #9f8e7c;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+.earnings-text {
+  width: 65%;
+  color: white;
+  text-align: left;
+  margin: 0 14px;
+}
+.earning-value,
+.earning-label {
+  font-family: oswald !important;
+}
+.earning-label {
+  color: #ffffffcc;
+  font-size: 13px;
+}
+.menu-box {
+  display: flex;
+  width: 92%;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow-x: scroll;
+}
+.menu {
+  background-color: #9f8e7cba;
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: 0px 8px !important;
+  font-family: oswald !important;
+  color: #ffffffe0;
+  transition: all 1s;
+  font-weight: 400 !important;
+  cursor: pointer;
+}
+.menu:hover {
+  background-color: #9f8e7c;
+  color: #ffffff;
+}
+.active {
+  background-color: #9f8e7c;
+  color: #ffffff;
+}
+.progress-bar-value {
+  font-size: 15px !important;
+  font-family: oswald !important;
+  font-weight: bolder !important;
+}
+.all-box {
+  width: 92%;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.box-heading {
+  font-size: 15px;
+  font-family: oswald !important;
+}
+.box-heading-div {
+  margin: 10px 10px 0px 10px;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+@media only screen and (max-width: 600px) {
+  .todays-task-box {
+    width: 48% !important;
+    height: 150px !important;
+  }
+  .total-view-box {
+    width: 48% !important;
+  }
+  .youtube-box {
+    width: 100% !important;
+    height: 225px !important;
+    margin-top: 20px !important;
+  }
+  .iframe-container {
+    height: 100% !important;
+    min-height: auto !important;
+  }
+  .iframe-container > div {
+    height: 100% !important;
+    min-height: auto !important;
+  }
+}

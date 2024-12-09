@@ -1,0 +1,12 @@
+.main-div {
+  background-color: #222732;
+  min-height: 100vh;
+  display: flex;
+  padding: 12px;
+}
+
+.main-component {
+  flex-basis: 87%;
+  background-color: #f8f3ea;
+  border-radius: 15px;
+}

@@ -1,0 +1,88 @@
+.signUpPage {
+  background-color: #eee3cf6e;
+  min-height: 100vh;
+}
+.main-img {
+  width: 90%;
+}
+.headings {
+  color: white;
+  background-color: #9f8e7c;
+  padding: 0px 20px 20px 20px;
+  min-height: 73vh;
+  border-radius: 0px 0px 35px 35px;
+  text-align: left;
+}
+.img-box {
+  display: flex;
+  justify-content: center;
+}
+.signup-buttons {
+  min-height: 27vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.right-side-arrow {
+  background-color: #d9b75d;
+  color: black;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+/* .right-side-arrow:active .arrow-png{
+    transform: rotate(-90deg) !important;
+} */
+.arrow-png {
+  width: 16px;
+  transition: all 1.1s;
+}
+.arrow-png-active {
+  transform: rotate(-90deg) !important;
+}
+/* model */
+.MuiDrawer-paper {
+  height: 95% !important;
+  background-color: #f8f3ea !important;
+  border-radius: 20px 20px 0px 0px !important;
+}
+.main-model {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.login-form {
+  text-align: center;
+}
+.sign-up-mobile {
+  font-size: 22px !important;
+  margin-top: 15px !important;
+  font-weight: 700 !important;
+  color: #9f8e7c;
+}
+.input-mobile {
+  width: 84%;
+}
+.submit-box {
+  margin-top: 28px;
+}
+.form-top {
+  flex-basis: 100%;
+  background-color: #9f8e7c;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+}
+.form-top-vector {
+  width: 240px;
+}
+.submit-text {
+  font-size: 14px !important;
+}
