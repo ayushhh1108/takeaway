@@ -13,7 +13,7 @@ import { getUserDetails } from './Pages/action';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#8885a2'
+      main: '#9f8e7c'
     },
     secondary: {
       main: '#eee3cf'

@@ -17,8 +17,9 @@ import { useDispatch } from "react-redux";
 import { postSignInAPI, postSignUpAPI } from "../../Pages/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import OTP from "../Otp";
 
-function SignUpMobile({ isSignIn }) {
+function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [popupForm, setPopupForm] = useState(false);
@@ -86,6 +87,7 @@ function SignUpMobile({ isSignIn }) {
             initialValues={mainValues}
             validationSchema={validationSchema}
             onSubmit={(values) => {
+              handleSendCode();
               // login
               //   ? dispatch(postSignInAPI(values, navigate))
               //   : handleSignUp(values);
@@ -102,7 +104,11 @@ function SignUpMobile({ isSignIn }) {
                   >
                     Phone Verification
                   </Typography>
-                  {textFieldHandler(errors, touched, handleChange)}
+                  {otpSection ? (
+                    <OTP />
+                  ) : (
+                    textFieldHandler(errors, touched, handleChange)
+                  )}
                   <Box className="submit-box">
                     <Typography
                       variant="body1"
@@ -117,7 +123,7 @@ function SignUpMobile({ isSignIn }) {
                       style={{ backgroundColor: "#9f8e7c", margin: "15px 0px" }}
                       type="submit"
                     >
-                      Send the Code
+                      {otpSection ? "Verify Phone Number" : "Send the Code"}
                     </Button>
                   </Box>
                 </Box>

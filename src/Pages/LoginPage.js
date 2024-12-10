@@ -14,11 +14,14 @@ import { useDispatch } from "react-redux";
 import { postSignInAPI } from "./action";
 import SignUpMobile from "../components/loginpageMobile";
 import { useLocation, useNavigate } from "react-router-dom";
+import OTP from "../components/Otp";
+import { useState } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [otpSection, setOTPSection] = useState(false);
   const isSignIn = location?.state?.isSignIn;
   const matches = useMediaQuery("(max-width:600px)");
   const mainBoxStyle = {
@@ -95,8 +98,17 @@ const LoginPage = () => {
     dispatch(postSignInAPI(JSON.stringify(values), navigate));
   };
 
+  const handleSendCode = () => {
+    setOTPSection(true);
+    otpSection && navigate("/menu");
+  };
+
   return matches ? (
-    <SignUpMobile isSignIn={isSignIn} />
+    <SignUpMobile
+      isSignIn={isSignIn}
+      otpSection={otpSection}
+      handleSendCode={handleSendCode}
+    />
   ) : (
     <LoginBlock>
       <Box style={mainBoxStyle}>
@@ -109,6 +121,7 @@ const LoginPage = () => {
             validationSchema={validationSchema}
             onSubmit={(values) => {
               handleSignIn(values);
+              handleSendCode();
             }}
           >
             {({ errors, touched, handleSubmit, handleChange, values }) => (
@@ -123,17 +136,21 @@ const LoginPage = () => {
                     PHONE VERIFICATION
                   </Typography>
                   <Box style={{ width: "100%" }}>
-                    <TextField
-                      id="phone"
-                      label="Phone Number"
-                      variant="standard"
-                      name="phone"
-                      value={values?.phone}
-                      className="input"
-                      onChange={handleChange}
-                      error={touched.phone && Boolean(errors.phone)}
-                      helperText={touched.phone && errors.phone}
-                    />
+                    {!otpSection ? (
+                      <TextField
+                        id="phone"
+                        label="Phone Number"
+                        variant="standard"
+                        name="phone"
+                        value={values?.phone}
+                        className="input"
+                        onChange={handleChange}
+                        error={touched.phone && Boolean(errors.phone)}
+                        helperText={touched.phone && errors.phone}
+                      />
+                    ) : (
+                      <OTP />
+                    )}
                   </Box>
                   <Box className="submit-btn">
                     <Typography
@@ -150,7 +167,7 @@ const LoginPage = () => {
                       // onClick={handleSubmit}
                       type="submit"
                     >
-                      Send the Code
+                      {otpSection ? "Verify Phone Number" : "Send the Code"}
                     </Button>
                   </Box>
                 </Box>
