@@ -1,0 +1,37 @@
+.categories {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 15px;
+
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px; /* Space between items */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For IE and Edge */
+}
+
+.categories::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
+
+.category {
+  font-family: "Kanit", sans-serif !important;
+  font-weight: 300 !important;
+  font-style: normal;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  color: #050404;
+  white-space: nowrap;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.active-category {
+  font-size: 24px !important;
+  font-weight: 600 !important;
+}
