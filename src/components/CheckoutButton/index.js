@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-const CheckoutButton = () => {
+const CheckoutButton = ({ onGetMyCoffee }) => {
   const buttonStyles = {
     position: "fixed",
     bottom: "20px",
@@ -26,7 +26,7 @@ const CheckoutButton = () => {
     <Button
       style={buttonStyles}
       variant="contained"
-      onClick={() => alert("Brew It Up!")}
+      onClick={onGetMyCoffee}
       onMouseOver={(e) =>
         (e.target.style.backgroundColor = hoverStyles.backgroundColor)
       }

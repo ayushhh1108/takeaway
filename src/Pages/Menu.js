@@ -1,23 +1,7 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Input,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
-import { Formik } from "formik";
-import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { postSignInAPI } from "./action";
-import SignUpMobile from "../components/loginpageMobile";
 import { useLocation, useNavigate } from "react-router-dom";
-import OTP from "../components/Otp";
-import Img from "../assets/Business analytics-cuate.png";
 import { useState } from "react";
 import ItemCard from "../components/ItemCard";
 import SearchInputWithIcon from "../components/SearchBaar";
@@ -29,6 +13,7 @@ import coffee5 from "../assets/menuImages/Dalgona Coffee vs Greek Frappe • Ol
 import coffee6 from "../assets/menuImages/which of the aesthetics that i like are you_.jpeg";
 import CheckoutButton from "../components/CheckoutButton";
 import "./menu.css";
+import CheckoutDialog from "../components/CheckoutDialog";
 
 const menuItems = [
   {
@@ -311,10 +296,10 @@ const coffeeAndDessertTypes = [
 
 const MenuPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
   const [category, setCategory] = useState("");
+  const [checkoutDrawer, setCheckoutDrawer] = useState(false);
   const isSignIn = location?.state?.isSignIn;
   const matches = useMediaQuery("(max-width:600px)");
 
@@ -402,9 +387,20 @@ const MenuPage = () => {
     borderRadius: "40px 40px 0% 0%",
   });
 
+  const onGetMyCoffee = () => {
+    setCheckoutDrawer(true);
+  };
+
+  const handleClose = () => {
+    setCheckoutDrawer(false);
+  };
+
+  console.log("onGetMyCoffee", checkoutDrawer);
+
   return (
     <OrderSelectionBlock className="menu-page">
-      <CheckoutButton />
+      <CheckoutDialog handleClose={handleClose} open={checkoutDrawer} />
+      <CheckoutButton onGetMyCoffee={onGetMyCoffee} />
       <SearchInputWithIcon />
       <MenuBox className="menu-box-container">
         <Box
