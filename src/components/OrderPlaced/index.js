@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, Box, Grid } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-const OrderConfirmation = () => {
+const OrderConfirmation = ({ handleTrack }) => {
   return (
     <Box
       sx={{
@@ -95,6 +95,7 @@ const OrderConfirmation = () => {
                 color: "white",
                 fontWeight: 500,
               }}
+              onClick={handleTrack}
             >
               Your brew is on the way – Track Your Order.
             </Typography>

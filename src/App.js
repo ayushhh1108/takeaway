@@ -10,6 +10,7 @@ import TermsConditions from "./Pages/TermsConditionsPage";
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "./Pages/action";
 import MenuPage from "./Pages/Menu";
+import OrderStatus from "./Pages/TrackPage";
 
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ function App() {
               <Route path="/Terms-Conditions" element={<TermsConditions />} />
             </Route>
             <Route path="/menu" element={<MenuPage />} />
+            <Route path="/track/:id" element={<OrderStatus />} />
             <Route path="/login" exact element={<LoginPage />} />
           </Routes>
         </div>

@@ -4,24 +4,30 @@ import {
   CardContent,
   CardMedia,
   Dialog,
+  Drawer,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  SwipeableDrawer,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import "./index.css";
 import CheckoutCard from "../checkoutCard";
 import coffee1 from "../../assets/menuImages/Biscoff Cloud Coffee recipe.jpeg";
 import React, { useState } from "react";
 import OrderConfirmation from "../OrderPlaced";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
   const [confirm, setConfirm] = useState(false);
   const [age, setAge] = React.useState("");
   const [processDone, setProcessDone] = useState(false);
+  const navigate = useNavigate();
+  const matches = useMediaQuery("(max-width:600px)");
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -71,16 +77,9 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
     setConfirm(false);
   };
 
-  return (
-    <Dialog
-      fullWidth={!processDone}
-      onClose={() => handleClose(cartItems)}
-      open={open}
-      className={
-        processDone ? "checkout-dialog order-placed" : "checkout-dialog"
-      }
-    >
-      {confirm ? (
+  const CartComponent = () => {
+    if (confirm) {
+      return (
         <Box>
           <Typography className="main-title">Almost Done</Typography>
           <Box>
@@ -110,11 +109,15 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
             </Typography>
           </Box>
         </Box>
-      ) : processDone ? (
+      );
+    } else if (processDone) {
+      return (
         <Box className="order-placed">
-          <OrderConfirmation />
+          <OrderConfirmation handleTrack={handleTrack} />
         </Box>
-      ) : (
+      );
+    } else {
+      return (
         <Box>
           <Typography className="main-title">
             Just One Sip Away: Final Order Review
@@ -155,8 +158,43 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
             </Box>
           )}
         </Box>
-      )}
-    </Dialog>
-  );
+      );
+    }
+  };
+
+  const handleTrack = () => {
+    navigate("/track/erg");
+    setProcessDone(false);
+    setConfirm(false);
+    handleClose(cartItems);
+  };
+
+  if (matches) {
+    return (
+      <SwipeableDrawer
+        anchor="bottom"
+        onClose={() => handleClose(cartItems)}
+        open={open}
+        className={
+          processDone ? "checkout-drawer order-placed" : "checkout-drawer"
+        }
+      >
+        <CartComponent />
+      </SwipeableDrawer>
+    );
+  } else {
+    return (
+      <Dialog
+        fullWidth={!processDone}
+        onClose={() => handleClose(cartItems)}
+        open={open}
+        className={
+          processDone ? "checkout-dialog order-placed" : "checkout-dialog"
+        }
+      >
+        <CartComponent />
+      </Dialog>
+    );
+  }
 };
 export default CheckoutDialog;

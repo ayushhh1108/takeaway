@@ -5,7 +5,13 @@
   border-radius: 10px;
 }
 
-.order-placed .MuiDialog-paperScrollPaper {
+.checkout-drawer .MuiDrawer-paper {
+  height: auto !important;
+  padding: 20px;
+}
+
+.order-placed .MuiDialog-paperScrollPaper,
+.order-placed .MuiDrawer-paper {
   padding: 0px !important;
 }
 
