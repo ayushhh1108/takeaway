@@ -15,6 +15,7 @@ import "./index.css";
 import CheckoutCard from "../checkoutCard";
 import coffee1 from "../../assets/menuImages/Biscoff Cloud Coffee recipe.jpeg";
 import React, { useState } from "react";
+import OrderConfirmation from "../OrderPlaced";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
@@ -62,19 +63,22 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
 
   const handleConfirm = () => {
     setConfirm(true);
+    setProcessDone(false);
   };
 
   const completeProcess = () => {
     setProcessDone(true);
-    
+    setConfirm(false);
   };
 
   return (
     <Dialog
-      fullWidth
+      fullWidth={!processDone}
       onClose={() => handleClose(cartItems)}
       open={open}
-      className="checkout-dialog"
+      className={
+        processDone ? "checkout-dialog order-placed" : "checkout-dialog"
+      }
     >
       {confirm ? (
         <Box>
@@ -105,6 +109,10 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
               Seal the Deal
             </Typography>
           </Box>
+        </Box>
+      ) : processDone ? (
+        <Box className="order-placed">
+          <OrderConfirmation />
         </Box>
       ) : (
         <Box>
