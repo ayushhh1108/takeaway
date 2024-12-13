@@ -12,6 +12,7 @@
   font-size: 18px !important;
   margin-bottom: 12px !important;
   border-bottom: 1px solid #9f8e7c87;
+  padding-bottom: 5px;
 }
 
 .total-line {
@@ -45,4 +46,9 @@
   text-align: center;
   margin-top: 15px !important;
   cursor: pointer;
+}
+
+.vehical-no {
+  width: 100%;
+  margin-bottom: 15px !important;
 }
