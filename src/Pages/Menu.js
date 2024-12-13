@@ -1,8 +1,8 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { json, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import ItemCard from "../components/ItemCard";
 import SearchInputWithIcon from "../components/SearchBaar";
 import coffee1 from "../assets/menuImages/A Croissant Quest in Paris - Page 4 of 8 - Bake from Scratch.jpeg";
@@ -391,15 +391,29 @@ const MenuPage = () => {
     setCheckoutDrawer(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (latestCartItems) => {
     setCheckoutDrawer(false);
+    setCartItems(latestCartItems);
   };
 
-  console.log("onGetMyCoffee", checkoutDrawer);
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    setCartItems(cart);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   return (
     <OrderSelectionBlock className="menu-page">
-      <CheckoutDialog handleClose={handleClose} open={checkoutDrawer} />
+      <CheckoutDialog
+        addItem={addItem}
+        removeItem={removeItem}
+        handleClose={handleClose}
+        open={checkoutDrawer}
+        selectedItems={cartItems}
+      />
       <CheckoutButton onGetMyCoffee={onGetMyCoffee} />
       <SearchInputWithIcon />
       <MenuBox className="menu-box-container">

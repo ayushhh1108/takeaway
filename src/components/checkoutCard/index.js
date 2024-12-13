@@ -2,12 +2,11 @@ import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import "./index.css";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 
-const CheckoutCard = ({ item, addItem, removeItem, alreadyInn }) => {
-  console.log("alreadyInn", alreadyInn);
+const CheckoutCard = ({ item, addItem, removeItem }) => {
   return (
     <Card className="Checkout-box card-main">
       <CardMedia
-        sx={{ height: 80, width: 80 }}
+        sx={{ height: 85, width: 85 }}
         image={item?.img}
         className="service-main-image"
         title="green iguana"
@@ -20,19 +19,24 @@ const CheckoutCard = ({ item, addItem, removeItem, alreadyInn }) => {
           <span variant="p" className="cal">
             {item?.cal}
           </span>
-          {console.log("item", item)}
+          <span className="d-flex align-items-center blog-date-section">
+            <span style={{ color: "green" }}> {item?.price} </span>{" "}
+          </span>
         </Box>
         <Box className="right-side-pricing">
           <Box className="d-flex align-items-center ">
-            <span className="checkout-price-section" style={{ color: "green" }}> {item?.price} </span>{" "}
+            <span className="checkout-price-section" style={{ color: "green" }}>
+              {" "}
+              + {item?.price * item?.count}{" "}
+            </span>{" "}
           </Box>
           <Box className="add-remove-button-checkout">
-            {!alreadyInn?.count && (
+            {!item?.count && (
               <Typography onClick={() => addItem(item)} className="add-to-cart">
                 Add to Cart
               </Typography>
             )}
-            {alreadyInn?.count && (
+            {item?.count && (
               <Typography
                 onClick={() => removeItem(item)}
                 className="remove-button"
@@ -40,12 +44,10 @@ const CheckoutCard = ({ item, addItem, removeItem, alreadyInn }) => {
                 -
               </Typography>
             )}
-            {alreadyInn?.count && (
-              <Typography className="count-cart">
-                {alreadyInn?.count}
-              </Typography>
+            {item?.count && (
+              <Typography className="count-cart">{item?.count}</Typography>
             )}
-            {alreadyInn?.count && (
+            {item?.count && (
               <Typography onClick={() => addItem(item)} className="add-button">
                 +
               </Typography>

@@ -1,6 +1,7 @@
 .checkout-dialog .MuiDialog-paperScrollPaper {
   background-color: #e9dabd;
   padding: 25px;
+  padding-bottom: 10px;
   border-radius: 10px;
 }
 
@@ -9,4 +10,39 @@
   font-weight: 500 !important;
   font-style: normal;
   font-size: 18px !important;
+  margin-bottom: 12px !important;
+  border-bottom: 1px solid #9f8e7c87;
+}
+
+.total-line {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.total {
+  font-family: "Kanit", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal;
+  font-size: 16px !important;
+}
+
+.total-price {
+  font-family: "Kanit", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal;
+  font-size: 24px !important;
+}
+
+.confirm-button {
+  width: 100%;
+  padding: 5px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 15px !important;
+  cursor: pointer;
 }

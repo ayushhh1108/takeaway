@@ -8,6 +8,7 @@
 
 .Checkout-box {
   display: flex;
+  margin-bottom: 5px;
 }
 
 .menu-page .menu-box-container .card-main {
@@ -72,7 +73,7 @@
 }
 
 .checkout-price-section {
-  margin-bottom: 13px;
+  /* margin-bottom: 13px; */
   color: #b56d2a;
   font-size: 20px !important;
 }
@@ -197,11 +198,12 @@
 }
 
 .add-remove-button-checkout {
-  color: #ffffff;
-  background-color: #127973;
+  width: 80px;
+  color: #127973;
+  border: 1px solid #127973;
 
   border-radius: 4px;
-  padding: 3px;
+  /* padding: 3px; */
   /* padding-bottom: 7px; */
   text-align: center;
   display: flex;
@@ -229,6 +231,12 @@
 .add-to-cart {
   width: 100%;
   padding: 2px;
+}
+
+.right-side-pricing .align-items-center {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
 }
 
 @media (max-width: 960px) {
