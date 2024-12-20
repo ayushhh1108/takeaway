@@ -55,12 +55,14 @@ const AdminPanelOverview = () => {
               </li>
             </ul>
           </div>
-          <Button
-            variant="contained"
-            className="mt-5 bg-[#4B3F29] text-white hover:bg-[#3A2E21]"
-          >
-            Learn More
-          </Button>
+          <a href="#contact-us">
+            <Button
+              variant="contained"
+              className="mt-5 bg-[#4B3F29] text-white hover:bg-[#3A2E21]"
+            >
+              Contact us
+            </Button>
+          </a>
         </div>
 
         {/* Image Section */}
@@ -109,7 +111,9 @@ const OrderFulfillmentSection = () => {
           </div>
           <div className="flex flex-col items-center text-center">
             <IoCheckmarkDoneCircle size={40} />
-            <h3 className="mt-2 text-xl font-semibold text-gray-800">Completion</h3>
+            <h3 className="mt-2 text-xl font-semibold text-gray-800">
+              Completion
+            </h3>
             <p className="mt-2 text-gray-600">
               Mark orders as "Delivered," triggering a "Thank You" message to
               customers.

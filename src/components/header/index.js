@@ -73,7 +73,7 @@ function Header() {
               fontWeight: 700,
             }}
           >
-            TAKE A WAY
+            TAKE <span className="text-[#5a5869]">A</span> WAY
           </Typography>
           <IconButton
             color="inherit"

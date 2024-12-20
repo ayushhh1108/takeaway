@@ -389,8 +389,11 @@ const HomePage = () => {
       </Box>
       <Box className="bg-[#8885a2] py-10 text-white">
         <Typography variant="subtitle2">
-          © Copyright 2023 <span className="text-[#e5dfd2]">Money Bucks</span>.
-          All Rights Reserved
+          © Copyright 2023{" "}
+          <span className="text-[#e5dfd2]">
+            TAKE <span className="text-[#5a5869]">A</span> WAY
+          </span>
+          . All Rights Reserved
         </Typography>
         <Typography className=" text-[#e5dfd2]" variant="caption">
           All trademarks and logos appearing on the site are the property of
