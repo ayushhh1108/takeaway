@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Mainlogo from "../../assets/logopngs.png";
 
 import * as React from "react";
@@ -23,6 +23,7 @@ const navItems = ["Home", "Privacy Policy", "Contact Us"];
 const navItems2 = ["", "Privacy-Policy", "contact-us"];
 
 function Header() {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -71,7 +72,9 @@ function Header() {
               color: "#484756",
               fontSize: "28px",
               fontWeight: 700,
+              cursor: "pointer",
             }}
+            onClick={() => navigate("/")}
           >
             TAKE <span className="text-[#5a5869]">A</span> WAY
           </Typography>
