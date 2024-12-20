@@ -107,24 +107,24 @@ const HomePage = () => {
           className="w-[80%] relative flex flex-wrap justify-around text-[#e5dfd2] bg-[#8885a2] rounded-2xl"
         >
           <div className="py-10 px-5">
-            <h4 className="text-5xl font-bold">5000</h4>
-            <p>Videos Available</p>
+            <h4 className="text-4xl font-bold">QR Code</h4>
+            <p>for Access</p>
           </div>
           <div className="py-10 px-5">
-            <h4 className="text-5xl font-bold">20M +</h4>
-            <p>Registered Users</p>
+            <h4 className="text-4xl font-bold">Verification </h4>
+            <p>for Security</p>
           </div>
           <div className="py-10 px-5">
-            <h4 className="text-5xl font-bold">$120.0 M</h4>
-            <p>Paid Amount</p>
+            <h4 className="text-4xl font-bold">Menu</h4>
+            <p>for not Confusion</p>
           </div>
           <div className="py-10 px-5">
-            <h4 className="text-5xl font-bold">134500</h4>
-            <p>Videos Available</p>
+            <h4 className="text-4xl font-bold">Order Details</h4>
+            <p>for Easy to deliver</p>
           </div>
           <div className="py-10 px-5">
-            <h4 className="text-5xl font-bold">100+</h4>
-            <p>Ads Partners</p>
+            <h4 className="text-4xl font-bold">Payment Gateway</h4>
+            <p>for Safty</p>
           </div>
         </motion.div>
       </Box>
