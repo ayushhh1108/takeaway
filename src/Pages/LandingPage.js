@@ -64,24 +64,25 @@ const HomePage = () => {
             className="max-w-[500px] sm:min-h-[80vh] m-auto flex justify-center flex-col text-[#484756]"
           >
             <h1 className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl 2xl:text-5xl lg:text-start font-extrabold  ">
-              Earn money online <p className="text-[#5a5869]">with</p>{" "}
-              VideoCashCraft
+              Grow Your Takeaway <p className="text-[#5a5869]">Orders</p> with
+              Efficiency
             </h1>
             <p className="md:text-sm  lg:text-start lg:text-base 2xl:text-base">
-              Watch YouTube videos and earn money online with VideoCashCraft.
-              Join our platform and start earning today!
+              Provide customers with a fast, seamless online ordering
+              experience—boost your takeaway orders and simplify your
+              operations.
             </p>
             <div className="flex mt-4 justify-center lg:justify-start ">
-              <Link to="/register">
+              <a href="tel:9638121878">
                 <Button
                   variant="contained"
                   className="!normal-case"
                   endIcon={<BsArrowRight />}
                 >
                   {" "}
-                  Get Started Now
+                  Contact Now
                 </Button>
-              </Link>
+              </a>
             </div>
           </motion.div>
         </Box>
