@@ -389,7 +389,7 @@ const HomePage = () => {
       </Box>
       <Box className="bg-[#8885a2] py-10 text-white">
         <Typography variant="subtitle2">
-          © Copyright 2023{" "}
+          © Copyright 2024{" "}
           <span className="text-[#e5dfd2]">
             TAKE <span className="text-[#5a5869]">A</span> WAY
           </span>
