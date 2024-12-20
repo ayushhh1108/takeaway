@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { getUserDetails } from "./Pages/action";
 import MenuPage from "./Pages/Menu";
 import OrderStatus from "./Pages/TrackPage";
+import HomePage from "./Pages/LandingPage";
+import PrivacyPolicy from "./Pages/AboutUsPage";
 
 const theme = createTheme({
   palette: {
@@ -35,9 +37,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>
-            <Route path="/" element={<LoginPage />}>
-              <Route path="/Terms-Conditions" element={<TermsConditions />} />
-            </Route>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Terms-Conditions" element={<TermsConditions />} />
+            <Route path="/Privacy-Policy" element={<PrivacyPolicy />} />
             <Route path="/menu" element={<MenuPage />} />
             <Route path="/track/:id" element={<OrderStatus />} />
             <Route path="/login" exact element={<LoginPage />} />
