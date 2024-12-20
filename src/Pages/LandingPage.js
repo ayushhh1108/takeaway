@@ -15,7 +15,13 @@ import {
   BsFillPlayBtnFill,
   BsFillPeopleFill,
   BsCashCoin,
+  BsMenuButtonWideFill,
 } from "react-icons/bs";
+import {
+  MdOutlineQrCodeScanner,
+  MdOutlineSecurity,
+  MdPayments,
+} from "react-icons/md";
 import { IconContext } from "react-icons";
 import { motion } from "framer-motion";
 import { Formik } from "formik";
@@ -23,6 +29,10 @@ import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { sendMail } from "./action";
 import { BsArrowRight } from "react-icons/bs";
+import {
+  AdminPanelOverview,
+  OrderFulfillmentSection,
+} from "../components/Helper";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -136,7 +146,7 @@ const HomePage = () => {
           transition={{ duration: 0.5 }}
           className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl 2xl:text-5xl text-[#e5dfd2] font-extrabold  mb-3"
         >
-          How does it work?
+          Streamlined Ordering for Customers
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 40 }}
@@ -145,9 +155,9 @@ const HomePage = () => {
           transition={{ duration: 0.5 }}
           className="mb-8 w-[80%] lg:w-[50%] md:text-sm lg:text-base 2xl:text-base text-white mx-auto"
         >
-          We have partners at Money Bucks, love share multiple videos. So why
-          not get paid by watching videos online in your free time ? we pay you
-          cash simply for watching short videos or TV show trailers.
+          Customers can quickly place their takeaway orders online with just a
+          few clicks—no calls, no waiting, just fast and convenient service
+          every time.
         </motion.p>
         <div className="font-sans  w-full flex flex-row justify-center items-center flex-wrap">
           <IconContext.Provider value={{ color: "#484756", size: 42 }}>
@@ -158,13 +168,13 @@ const HomePage = () => {
               transition={{ duration: 0.5 }}
               className="card rounded-2xl w-96 mx-10 py-14 px-10 my-6 bg-white  shadow-xl hover:shadow"
             >
-              <BsFillPlayBtnFill className="mx-auto" />
+              <MdOutlineQrCodeScanner className="mx-auto" />
               <div className="text-center mt-2 text-3xl font-medium">
-                Watch Videos
+                Scan QR
               </div>
               <div className="text-center mt-2 font-light text-sm">
-                Commercial ads, movies, and TV shows online It’s the perfect way
-                to earn money at Money Bucks.
+                Customers scan a QR code (e.g., through Linktree) to start the
+                order process.
               </div>
             </motion.div>
             <motion.div
@@ -174,13 +184,12 @@ const HomePage = () => {
               transition={{ duration: 0.5 }}
               className="card rounded-2xl w-96 mx-10 py-14 px-10 my-6 bg-white  shadow-xl hover:shadow"
             >
-              <BsFillPeopleFill className="mx-auto" />
+              <MdOutlineSecurity className="mx-auto" />
               <div className="text-center mt-2 text-3xl font-medium">
-                Refer your friends
+                Verification for Security
               </div>
               <div className="text-center mt-2 font-light text-sm">
-                We'll confirm as soon as your friend joins. You get ₹50 and Your
-                friend gets ₹250.
+                Enter name and phone number to avoid fake or fraudulent orders.
               </div>
             </motion.div>
             <motion.div
@@ -190,18 +199,36 @@ const HomePage = () => {
               transition={{ duration: 0.5 }}
               className="card rounded-2xl w-96 mx-10 py-14 px-8  my-6 bg-white  shadow-xl hover:shadow"
             >
-              <BsCashCoin className="mx-auto" />
+              <BsMenuButtonWideFill className="mx-auto" />
               <div className="text-center mt-2 text-3xl font-medium">
-                Get paid
+                Menu and Order Details
               </div>
               <div className="text-center mt-2 font-light text-sm">
-                As the money flows in, you can transfer it to your Paytm,
-                Phonepe, PayPal account and more options.
+                Full menu available for item selection. Additional fields:
+                Vehicle number and color for easy delivery.
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="card rounded-2xl w-96 mx-10 py-14 px-8  my-6 bg-white  shadow-xl hover:shadow"
+            >
+              <MdPayments className="mx-auto" />
+              <div className="text-center mt-2 text-3xl font-medium">
+                Payment Options
+              </div>
+              <div className="text-center mt-2 font-light text-sm">
+                Online payments redirect to secure gateways. Cash payment option
+                available for confirmation.
               </div>
             </motion.div>
           </IconContext.Provider>
         </div>
       </Box>
+      <AdminPanelOverview />
+      <OrderFulfillmentSection />
       <Box
         id="contact-us"
         className="flex py-16 items-center flex-col sm:flex-col md:flex-row"
