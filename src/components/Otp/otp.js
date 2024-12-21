@@ -7,28 +7,40 @@ const OTPInput = ({ length = 6 }) => {
 
   const handleChange = (e, index) => {
     const { value } = e.target;
-
     // Only allow single digit input
+    
+    if(value?.length === 2  && !otp[5]){
+      const newOtp = [...otp];
+      newOtp[index+1] = value[1];
+      setOtp(newOtp);
+      inputs.current[index + 2].focus();
+    }         
     if (value.match(/^\d$/)) {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
 
-      // Move focus to the next input
-      if (index < length - 1) {
+      // Move focus to the next input if the current input is filled
+      if (index < length - 1 && value !== "") {
         inputs.current[index + 1].focus();
       }
     }
 
-    // Move focus to previous input on backspace
-    if (value === "" && index > 0) {
-      inputs.current[index - 1].focus();
+    // Handle backspace
+    if (value === "" && index != -1) {
+      const newOtp = [...otp];
+      newOtp[index] = "";
+      setOtp(newOtp);
+      if(index > 0){
+        inputs.current[index - 1].focus(); // Move focus to previous input
+      }
     }
   };
 
   const handleKeyDown = (e, index) => {
+    // Handle backspace when the input is already empty
     if (e.key === "Backspace" && otp[index] === "") {
-      // Move focus to previous input on backspace if current input is empty
+      // Move focus to previous input if current input is empty
       if (index > 0) {
         inputs.current[index - 1].focus();
       }

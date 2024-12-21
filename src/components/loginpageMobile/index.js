@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { postSignInAPI, postSignUpAPI } from "../../Pages/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import OTP from "../Otp";
+import OTP from "../Otp/otp";
 
 function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
   const dispatch = useDispatch();
@@ -40,13 +40,19 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
     }
   }, []);
 
-  const handleSignUp = async (values) => {
-    delete values.confirm_password;
-    const payload = JSON.stringify({ ...values, gender: "male" });
-    await dispatch(postSignUpAPI(payload, navigate));
+  const [otp, setOtp] = useState("");
+  const handleOTPChange = (newValue) => {
+    setOtp(newValue);
   };
 
-  const textFieldHandler = (errors, touched, handleChange) => {
+  const textFieldHandler = (errors, touched, handleChange, values) => {
+    const handlePhoneChange = (e) => {
+      const value = e.target.value;
+      if (/^\d{0,10}$/.test(value)) {
+        handleChange(e);
+      }
+    };
+
     return (
       <Box style={{ width: "100%" }}>
         <TextField
@@ -55,9 +61,12 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
           label="Phone Number"
           variant="standard"
           className="input-mobile"
-          onChange={handleChange}
+          onChange={handlePhoneChange}
           error={touched.phone && Boolean(errors.phone)}
           helperText={touched.phone && errors.phone}
+          type="tel"
+          inputMode="numeric"
+          value={values}
         />
       </Box>
     );
@@ -71,7 +80,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
         onClose={() => {
           setPopupForm(false);
         }}
-        transitionDuration={{ appear: 1200, enter: 1200, exit: 1000 }}
+        transitionDuration={{ appear: 600, enter: 600, exit: 500 }}
         className="main-drawer"
         style={{ height: "100%" }}
       >
@@ -93,7 +102,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
               //   : handleSignUp(values);
             }}
           >
-            {({ errors, touched, handleSubmit, handleChange }) => (
+            {({ errors, touched, handleSubmit, handleChange, values }) => (
               <form onSubmit={handleSubmit}>
                 <Box className="login-form">
                   <Typography
@@ -107,7 +116,12 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
                   {otpSection ? (
                     <OTP />
                   ) : (
-                    textFieldHandler(errors, touched, handleChange)
+                    textFieldHandler(
+                      errors,
+                      touched,
+                      handleChange,
+                      values?.phone
+                    )
                   )}
                   <Box className="submit-box">
                     <Typography
@@ -139,7 +153,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
     setClick(true);
     setTimeout(() => {
       setPopupForm(true);
-    }, 1100);
+    }, 500);
   };
 
   return (
