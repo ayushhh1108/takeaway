@@ -62,7 +62,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
     });
   };
 
-  const totalPrice = cartItems.reduce(
+  const totalPrice = cartItems?.reduce(
     (total, item) => total + item.price * item.count,
     0
   );

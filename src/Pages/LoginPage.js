@@ -102,13 +102,13 @@ const LoginPage = () => {
 
   const handleSignIn = async (values) => {
     console.log("name", values);
-    dispatch(postSignInAPI(JSON.stringify(values), navigate));
   };
 
   const handleSendCode = () => {
-    setOTPSection(true);
     otpSection && navigate("/menu");
+    setOTPSection(true);
   };
+  console.log("otpSection", otpSection);
 
   return matches ? (
     <SignUpMobile
@@ -127,8 +127,9 @@ const LoginPage = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              handleSignIn(values);
+              console.log("<OTP />", otpSection);
               handleSendCode();
+              // handleSignIn(values);
             }}
           >
             {({ errors, touched, handleSubmit, handleChange, values }) => {
@@ -200,8 +201,7 @@ const LoginPage = () => {
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#6c6054" }}
-                        onClick={handleSubmit}
-                        type="submit"
+                        onClick={otpSection ? handleSendCode : handleSubmit}
                       >
                         {otpSection ? "Verify Phone Number" : "Send the Code"}
                       </Button>

@@ -14,7 +14,6 @@ import { useState } from "react";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { postSignInAPI, postSignUpAPI } from "../../Pages/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OTP from "../Otp/otp";
