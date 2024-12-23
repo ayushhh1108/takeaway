@@ -199,8 +199,8 @@
 
 .add-remove-button-checkout {
   width: 80px;
-  color: #127973;
-  border: 1px solid #127973;
+  color: #000000;
+  border: 1px solid #000000;
 
   border-radius: 4px;
   /* padding: 3px; */
@@ -212,7 +212,7 @@
 
 .count-cart {
   background-color: #ffffff;
-  color: #127973;
+  color: #000000;
 }
 
 .add-button,

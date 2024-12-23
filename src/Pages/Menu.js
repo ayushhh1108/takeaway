@@ -383,8 +383,8 @@ const MenuPage = () => {
   };
 
   const MenuBox = styled(Box)({
-    backgroundColor: "#9f8e7c",
-    borderRadius: "40px 40px 0% 0%",
+    backgroundColor: "#0000002e",
+    borderRadius: "40px 0px 0% 0%",
   });
 
   const onGetMyCoffee = () => {

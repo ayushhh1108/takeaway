@@ -23,7 +23,7 @@ const SearchInputWithIcon = () => {
         }}
         className="kanit-bold"
       >
-        Menu
+        Enso
       </Typography>
       <Input
         className="search-input"
