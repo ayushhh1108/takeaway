@@ -9,6 +9,7 @@
 .Checkout-box {
   display: flex;
   margin-bottom: 5px;
+  width: 100% !important;
 }
 
 .menu-page .menu-box-container .card-main {

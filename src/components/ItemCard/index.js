@@ -5,7 +5,7 @@ import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
   console.log("alreadyInn", alreadyInn);
   return (
-    <Card className="blog-box card-main">
+    <Card className="blog-box card-main item-main-card">
       <CardContent className="card-Content-service">
         <Box className="description-box">
           <Typography variant="h6" className="name">

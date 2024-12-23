@@ -65,7 +65,7 @@ const OTPInput = ({ length = 6 }) => {
             margin: "0 5px",
             textAlign: "center",
             fontSize: "18px",
-            border: "1px solid #9f8e7c",
+            border: "1px solid #000000",
             borderRadius: "4px",
             backgroundColor: "transparent",
           }}

@@ -1,5 +1,5 @@
 .signUpPage {
-  background-color: #eee3cf6e;
+  background-color: #ffffff;
   min-height: 100vh;
 }
 .main-img {
@@ -7,7 +7,7 @@
 }
 .headings {
   color: white;
-  background-color: #9f8e7c;
+  background-color: #000000;
   padding: 0px 20px 20px 20px;
   min-height: 73vh;
   border-radius: 0px 0px 35px 35px;
@@ -24,8 +24,8 @@
   justify-content: center;
 }
 .right-side-arrow {
-  background-color: #d9b75d;
-  color: black;
+  background-color: #000000;
+  color: white;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -48,7 +48,7 @@
 /* model */
 .MuiDrawer-paper {
   height: 95% !important;
-  background-color: #f8f3ea !important;
+  background-color: #ffffff !important;
   border-radius: 20px 20px 0px 0px !important;
 }
 .main-model {
@@ -65,7 +65,7 @@
   font-size: 22px !important;
   margin-top: 15px !important;
   font-weight: 700 !important;
-  color: #9f8e7c;
+  color: #000000;
 }
 .input-mobile {
   width: 84%;
@@ -75,7 +75,7 @@
 }
 .form-top {
   flex-basis: 100%;
-  background-color: #9f8e7c;
+  background-color: #000000;
   display: flex;
   justify-content: center;
   border-radius: 20px;

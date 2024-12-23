@@ -7,7 +7,7 @@ const CheckoutButton = ({ onGetMyCoffee }) => {
     bottom: "20px",
     right: "20px",
     zIndex: 1000,
-    backgroundColor: "#FF6F00", // Bright Orange
+    backgroundColor: "#09b96d", // Bright Orange
     color: "#FFFFFF", // White text
     padding: "10px 20px",
     borderRadius: "8px",
@@ -19,7 +19,7 @@ const CheckoutButton = ({ onGetMyCoffee }) => {
   };
 
   const hoverStyles = {
-    backgroundColor: "#E65A00", // Darker orange on hover
+    backgroundColor: "#008f51", // Darker orange on hover
   };
 
   return (

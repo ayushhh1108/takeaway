@@ -53,21 +53,36 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
     };
 
     return (
-      <Box style={{ width: "100%" }}>
-        <TextField
-          id="phone"
-          name="phone"
-          label="Phone Number"
-          variant="standard"
-          className="input-mobile"
-          onChange={handlePhoneChange}
-          error={touched.phone && Boolean(errors.phone)}
-          helperText={touched.phone && errors.phone}
-          type="tel"
-          inputMode="numeric"
-          value={values}
-        />
-      </Box>
+      <>
+        <Box style={{ width: "100%" }}>
+          <TextField
+            id="name"
+            label="Name"
+            variant="standard"
+            name="name"
+            value={values?.name}
+            className="input-mobile"
+            onChange={handleChange} // Standard handleChange for name
+            error={touched.name && Boolean(errors.name)}
+            helperText={touched.name && errors.name}
+          />
+        </Box>
+        <Box style={{ width: "100%" }}>
+          <TextField
+            id="phone"
+            name="phone"
+            label="Phone Number"
+            variant="standard"
+            className="input-mobile"
+            onChange={handlePhoneChange}
+            error={touched.phone && Boolean(errors.phone)}
+            helperText={touched.phone && errors.phone}
+            type="tel"
+            inputMode="numeric"
+            value={values}
+          />
+        </Box>
+      </>
     );
   };
 
@@ -129,11 +144,11 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
                       className="submit-text "
                     >
                       We need to register your phone number before getting
-                      <span style={{ color: "#d9b75d" }}> started!</span>
+                      <span style={{ color: "#ffd585" }}> started!</span>
                     </Typography>
                     <Button
                       variant="contained"
-                      style={{ backgroundColor: "#9f8e7c", margin: "15px 0px" }}
+                      style={{ backgroundColor: "#000000", margin: "15px 0px" }}
                       type="submit"
                     >
                       {otpSection ? "Verify Phone Number" : "Send the Code"}
@@ -168,7 +183,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
           fontSize="23px"
           style={{ padding: "10px 20px 0px 20px" }}
         >
-          Your Perfect <span style={{ color: "#d9b75d" }}>Coffee </span> Awaits!
+          Your Perfect <span style={{ color: "#ffd585" }}>Coffee </span> Awaits!
         </Typography>
         <Typography
           component={"p"}

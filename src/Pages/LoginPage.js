@@ -5,8 +5,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import login_back from "../assets/login.jpg";
-import login_vector from "../assets/login_vector.png";
+import login_back from "../assets/login.png";
+import login_vector from "../assets/mobile_login_form.png";
 import styled from "@emotion/styled";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -196,11 +196,11 @@ const LoginPage = () => {
                         className="submit-text "
                       >
                         We need to register your phone number before getting
-                        <span style={{ color: "#9f8e7c" }}> started!</span>
+                        <span style={{ color: "#000000" }}> started!</span>
                       </Typography>
                       <Button
                         variant="contained"
-                        style={{ backgroundColor: "#6c6054" }}
+                        style={{ backgroundColor: "#000000", color: "#ffd585" }}
                         onClick={otpSection ? handleSendCode : handleSubmit}
                       >
                         {otpSection ? "Verify Phone Number" : "Send the Code"}

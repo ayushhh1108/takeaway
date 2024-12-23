@@ -17,7 +17,7 @@ import PrivacyPolicy from "./Pages/AboutUsPage";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#9f8e7c",
+      main: "#000000",
     },
     secondary: {
       main: "#eee3cf",
