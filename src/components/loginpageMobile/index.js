@@ -26,6 +26,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
   const [click, setClick] = useState(false);
   const [validationSchema, setSchema] = useState(
     yup.object({
+      name: yup.string("Enter your Name"),
       phone: yup
         .string("Enter your phone number")
         .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
