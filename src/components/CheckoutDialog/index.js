@@ -34,7 +34,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   };
   const addItem = (item) => {
     setCartItems((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+      const existingItem = prevCart?.find((cartItem) => cartItem.id === item.id);
       if (existingItem) {
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
@@ -48,7 +48,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
 
   const removeItem = (itemId) => {
     setCartItems((prevCart) => {
-      const existingItem = prevCart.find(
+      const existingItem = prevCart?.find(
         (cartItem) => cartItem.id === itemId.id
       );
       if (existingItem?.count > 1) {

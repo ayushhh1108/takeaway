@@ -354,7 +354,9 @@ const MenuPage = () => {
 
   const addItem = (item) => {
     setCartItems((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+      const existingItem = prevCart?.find(
+        (cartItem) => cartItem.id === item.id
+      );
       if (existingItem) {
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
@@ -368,7 +370,8 @@ const MenuPage = () => {
 
   const removeItem = (itemId) => {
     setCartItems((prevCart) => {
-      const existingItem = prevCart.find(
+      console.log("removeItem", prevCart);
+      const existingItem = prevCart?.find(
         (cartItem) => cartItem.id === itemId.id
       );
       if (existingItem?.count > 1) {
@@ -398,7 +401,8 @@ const MenuPage = () => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
-    setCartItems(cart);
+    console.log("cart", cart);
+    setCartItems(cart ?? []);
   }, []);
 
   useEffect(() => {
