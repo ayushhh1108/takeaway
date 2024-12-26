@@ -145,7 +145,6 @@ const LoginPage = () => {
             onSubmit={(values) => {
               setOtpData({ number: values?.number });
               dispatch(postSignUpAPI(values, handleSendCode));
-              console.log("<OTP />", values);
               // handleSignIn(values);
             }}
           >

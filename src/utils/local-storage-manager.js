@@ -18,6 +18,10 @@ const LocalStorageManager = {
   clearLocalStorage: () => {
     return localStorage.clear();
   },
+  
+  clearCart: () => {
+    localStorage.setItem("cart", JSON.stringify([]));
+  },
 
   isUserAvailable: () => {
     const user = LocalStorageManager.getLocalStorage("user");

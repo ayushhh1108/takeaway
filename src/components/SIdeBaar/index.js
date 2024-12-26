@@ -21,7 +21,6 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const params = useLocation();
     const selector = useSelector(state=> state.Reducer.AccountData);
-    console.log('selector====>',selector);
     const [user,setUser] = useState();
   
     useEffect(()=>{
@@ -44,7 +43,7 @@ const Sidebar = () => {
 
   return (
     <div className="side-baar">
-    <div>{console.log("params",params.pathname)}
+    <div>
       <div className="logo">
         <img src={main_logo} alt="main_logo" className="main-logo-img" />
       </div>

@@ -135,7 +135,6 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
             <Typography
               className="confirm-button"
               onClick={() => {
-                console.log("errorerrorerrorerror", checkOutData);
                 const vehicleRegex = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
                 let error = false;
                 if (!vehicleNumber || !vehicleRegex.test(vehicleNumber)) {

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { api, apiEndPoints } from "../api";
 import axios, { Axios } from "axios";
+import LocalStorageManager from "../utils/local-storage-manager";
 
 export const GET_CATEGORIES = `GET_CATEGORIES`;
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
@@ -15,7 +16,6 @@ const getCategories = (payload) => {
 };
 
 const getMenu = (payload) => {
-  console.log("hii", payload);
   return {
     type: GET_MENU_DATA,
     payload: payload,
@@ -30,8 +30,6 @@ export const postSignUpAPI = (payload, handleSendCode) => async (dispatch) => {
       handleSendCode();
     }
   } catch (error) {
-    console.log(payload, "response", error);
-
     const { response: { data = {} } = {} } = error;
     return data;
   }
@@ -41,7 +39,6 @@ export const postOTPAPI =
   (payload, navigate, handleFail) => async (dispatch) => {
     try {
       const response = await api.post(apiEndPoints.postOTPverify(), payload);
-      console.log("response", response?.response?.data?.message);
       if (response?.response?.data?.message) {
         toast.error(response?.response?.data?.message);
         handleFail(payload);
@@ -75,12 +72,10 @@ export const getMenuData = () => async (dispatch) => {
   try {
     const response = await api.get(apiEndPoints.menuItems());
     if (response?.data) {
-      toast.success(response?.data?.message);
       dispatch(getMenu(response));
     } else if (response?.response?.data?.message) {
       toast.error(response?.response?.data?.message);
     }
-    console.log("response", response);
   } catch (error) {
     const { response: { data = {} } = {} } = error;
     return data;
@@ -107,10 +102,9 @@ export const postOrderCreate =
       // dispatch(signUp(response?.data));
       if (response?.data) {
         completeProcess();
+        LocalStorageManager.clearCart();
       }
     } catch (error) {
-      console.log(payload, "response", error);
-
       const { response: { data = {} } = {} } = error;
       return data;
     }

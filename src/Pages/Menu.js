@@ -373,7 +373,6 @@ const MenuPage = () => {
 
   const removeItem = (itemId) => {
     setCartItems((prevCart) => {
-      console.log("removeItem", prevCart);
       const existingItem = prevCart?.find(
         (cartItem) => cartItem.id === itemId.id
       );
@@ -427,14 +426,12 @@ const MenuPage = () => {
     }
   }, [category]);
 
-  console.log("store", store);
-
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   const handleSearchChange = (e) => {
-    const searchValue = e.target.value; 
+    const searchValue = e.target.value;
 
     if (searchValue) {
       setListMenu(
@@ -474,9 +471,9 @@ const MenuPage = () => {
             display: "flex",
             overflowX: "auto",
             padding: "10px",
-            gap: "10px", // Spacing between categories
-            scrollbarWidth: "none", // Hide scrollbar for Firefox
-            msOverflowStyle: "none", // Hide scrollbar for IE/Edge
+            gap: "10px",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
           }}
         >
           <Typography

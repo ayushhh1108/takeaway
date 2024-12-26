@@ -125,7 +125,6 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
             onSubmit={(values) => {
               setOtpData({ number: values?.number });
               dispatch(postSignUpAPI(values, handleSendCode));
-              console.log("<OTP />", values);
               // login
               //   ? dispatch(postSignInAPI(values, navigate))
               //   : handleSignUp(values);

@@ -3,7 +3,6 @@ import "./index.css";
 import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 
 const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
-  console.log("alreadyInn", alreadyInn);
   return (
     <Card className="blog-box card-main item-main-card">
       <CardContent className="card-Content-service">
@@ -59,10 +58,7 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
               )}
             </Box>
           </div>
-          {console.log(
-            "item",
-            `${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`
-          )}
+          
         </Box>
       </CardContent>
       <CardMedia

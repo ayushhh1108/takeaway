@@ -5,7 +5,6 @@ const OTP = ({ handleOtpChange }) => {
   const OTPInput = ({ length = 6 }) => {
     const [otp, setOtp] = useState(Array(length).fill(""));
     const inputs = useRef([]);
-    console.log("otp", otp[5]);
 
     useEffect(() => {
       otp[0] &&
