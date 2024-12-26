@@ -434,8 +434,7 @@ const MenuPage = () => {
   }, [cartItems]);
 
   const handleSearchChange = (e) => {
-    const searchValue = e.target.value; // Rename to avoid conflicts
-    console.log("value", searchValue);
+    const searchValue = e.target.value; 
 
     if (searchValue) {
       setListMenu(
