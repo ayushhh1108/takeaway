@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OTP from "../Otp/otp";
 import { postOTPAPI, postSignUpAPI } from "../../Pages/action";
+import { toast } from "react-toastify";
 
 function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
   const dispatch = useDispatch();

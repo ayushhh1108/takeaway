@@ -27,12 +27,6 @@ const theme = createTheme({
 });
 
 function App() {
-  const dispatch = useDispatch();
-  React.useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(getUserDetails());
-    }
-  }, []);
   return (
     <Router>
       <ThemeProvider theme={theme}>

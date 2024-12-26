@@ -100,18 +100,3 @@ export const sendMail = (payload) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = () => async (dispatch) => {
-  try {
-    const response = await api.get(apiEndPoints.getUser());
-    dispatch(test(response?.data.data));
-  } catch (error) {
-    const { response: { data = {} } = {} } = error;
-    return data;
-  }
-};
-const test = (payload) => {
-  return {
-    type: POST_SIGNIN_API,
-    payload: payload,
-  };
-};
