@@ -16,25 +16,28 @@ import {
 } from "@mui/material";
 import "./index.css";
 import CheckoutCard from "../checkoutCard";
-import coffee1 from "../../assets/menuImages/Biscoff Cloud Coffee recipe.jpeg";
 import React, { useState } from "react";
 import OrderConfirmation from "../OrderPlaced";
 import { useNavigate } from "react-router-dom";
+import LocalStorageManager from "../../utils/local-storage-manager";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { postOrderCreate } from "../../Pages/action";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
+  const [checkOutData, setCheckOutData] = useState();
   const [confirm, setConfirm] = useState(false);
-  const [age, setAge] = React.useState("");
   const [processDone, setProcessDone] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   const addItem = (item) => {
     setCartItems((prevCart) => {
-      const existingItem = prevCart?.find((cartItem) => cartItem.id === item.id);
+      const existingItem = prevCart?.find(
+        (cartItem) => cartItem.id === item.id
+      );
       if (existingItem) {
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
@@ -78,6 +81,29 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   };
 
   const CartComponent = () => {
+    const [vehicleNumber, setVehicleNumber] = useState("");
+    const [method, setMethod] = React.useState("");
+
+    const handleChange = (event) => {
+      setMethod(event.target.value);
+    };
+
+    const handleVehicleNumberChange = (e) => {
+      let value = e.target.value.toUpperCase();
+      value = value
+        .replace(/[^A-Z0-9]/g, "")
+        .replace(
+          /^([A-Z]{0,2})([0-9]{0,2})([A-Z]{0,2})([0-9]{0,4}).*$/,
+          "$1$2$3$4"
+        );
+      if (
+        /^[A-Z]{0,2}[0-9]{0,2}[A-Z]{0,2}[0-9]{0,4}$/.test(value) &&
+        value.length <= 10
+      ) {
+        setVehicleNumber(value);
+      }
+    };
+
     if (confirm) {
       return (
         <Box>
@@ -88,6 +114,8 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
               label="Vehical Number"
               className="vehical-no"
               variant="standard"
+              value={vehicleNumber}
+              onChange={handleVehicleNumberChange}
             />
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
@@ -96,15 +124,49 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                label="Age"
+                value={method}
+                label="method"
                 onChange={handleChange}
               >
-                <MenuItem value={10}>CASH</MenuItem>
-                <MenuItem value={20}>ONLINE</MenuItem>
+                <MenuItem value={"cash"}>CASH</MenuItem>
+                <MenuItem value={"online"}>ONLINE</MenuItem>
               </Select>
             </FormControl>
-            <Typography className="confirm-button" onClick={completeProcess}>
+            <Typography
+              className="confirm-button"
+              onClick={() => {
+                console.log("errorerrorerrorerror", checkOutData);
+                const vehicleRegex = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
+                let error = false;
+                if (!vehicleNumber || !vehicleRegex.test(vehicleNumber)) {
+                  toast.error("Enter Right Vehicle Number");
+                  error = true;
+                }
+                if (!method) {
+                  toast.error("Select Payment Method");
+                  error = true;
+                }
+                if (error) {
+                  return;
+                } else {
+                  setCheckOutData({
+                    ...checkOutData,
+                    carNumber: vehicleNumber,
+                    paymentMode: method,
+                  });
+                  dispatch(
+                    postOrderCreate(
+                      {
+                        ...checkOutData,
+                        carNumber: vehicleNumber,
+                        paymentMode: method,
+                      },
+                      completeProcess
+                    )
+                  );
+                }
+              }}
+            >
               Seal the Deal
             </Typography>
           </Box>
@@ -152,7 +214,17 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                 </span>
                 {totalPrice}
               </Typography>
-              <Typography className="confirm-button" onClick={handleConfirm}>
+              <Typography
+                className="confirm-button"
+                onClick={() => {
+                  setCheckOutData({
+                    order: cartItems,
+                    userId: LocalStorageManager.getUserData()?.id,
+                    total: totalPrice,
+                  });
+                  handleConfirm();
+                }}
+              >
                 Sip Happens – Confirm Now
               </Typography>
             </Box>

@@ -100,3 +100,18 @@ export const sendMail = (payload) => async (dispatch) => {
   }
 };
 
+export const postOrderCreate =
+  (payload, completeProcess) => async (dispatch) => {
+    try {
+      const response = await api.post(apiEndPoints.orderCreate(), payload);
+      // dispatch(signUp(response?.data));
+      if (response?.data) {
+        completeProcess();
+      }
+    } catch (error) {
+      console.log(payload, "response", error);
+
+      const { response: { data = {} } = {} } = error;
+      return data;
+    }
+  };

@@ -23,6 +23,13 @@ const LocalStorageManager = {
     const user = LocalStorageManager.getLocalStorage("user");
     return !!user?.token;
   },
+  getUserData: () => {
+    if (!LocalStorageManager.isUserAvailable()) {
+      return null;
+    }
+    const user = LocalStorageManager.getLocalStorage("user");
+    return user;
+  },
   getToken: () => {
     const user = LocalStorageManager.getLocalStorage("user");
     return user?.token;
