@@ -1,41 +1,43 @@
-import axios from 'axios';
+import axios from "axios";
+import { getToken } from "../utils/auth";
 
 const createAPI = () => {
-    const customerApiUrl = process.env.REACT_APP_API_BASE_URL;
-    // const calculate = '<calculated when request is sent>';
-    const headers = {
-        'Content-Type': 'application/json',
-    };
+  const customerApiUrl = process.env.REACT_APP_API_BASE_URL;
 
-    const api = axios.create({
-        baseURL: customerApiUrl,
-        headers,
-    });
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
-    api.interceptors.request.use(async (config) => {
-        const data = JSON.parse(localStorage.getItem("token"))
-        if (
-            data
-        ) {
-            config.headers[`token`] = data;
-        }
-        return config;
-    });
+  const api = axios.create({
+    baseURL: customerApiUrl,
+    headers,
+  });
 
-    api.interceptors.response.use(response => {
-        return response;
-     }, error => {
-       if (error.response.status === 401) {
+  api.interceptors.request.use(async (config) => {
+    const data = await getToken();
+    if (data && !config.skipAuth) {
+      config.headers[`authorization`] = `Bearer ${data}`;
+    }
+    return config;
+  });
+
+  api.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
         return error;
-       }
-       return error;
-     })
+      }
+      return error;
+    }
+  );
 
-    // api.interceptors.response.use(
-    //     (response) => response,
-    //     async (err) => err
-    // );
-    return api;
+  // api.interceptors.response.use(
+  //     (response) => response,
+  //     async (err) => err
+  // );
+  return api;
 };
 
 export default createAPI();

@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ItemCard from "../components/ItemCard";
@@ -14,6 +14,7 @@ import coffee6 from "../assets/menuImages/which of the aesthetics that i like ar
 import CheckoutButton from "../components/CheckoutButton";
 import "./menu.css";
 import CheckoutDialog from "../components/CheckoutDialog";
+import { GetCategories, getMenuData } from "./action";
 
 const menuItems = [
   {
@@ -296,12 +297,14 @@ const coffeeAndDessertTypes = [
 
 const MenuPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
+  const [listMenu, setListMenu] = useState([]);
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
   const [checkoutDrawer, setCheckoutDrawer] = useState(false);
-  const isSignIn = location?.state?.isSignIn;
-  const matches = useMediaQuery("(max-width:600px)");
+  const store = useSelector((store) => store?.Reducer);
 
   const OrderSelectionBlock = styled(Box)({
     backgroundColor: "white",
@@ -400,14 +403,56 @@ const MenuPage = () => {
   };
 
   useEffect(() => {
+    dispatch(GetCategories());
+    dispatch(getMenuData());
     const cart = JSON.parse(localStorage.getItem("cart"));
-    console.log("cart", cart);
     setCartItems(cart ?? []);
   }, []);
 
   useEffect(() => {
+    setListMenu(store?.menuData ? store?.menuData : []);
+  }, [store]);
+
+  useEffect(() => {
+    if (category) {
+      setListMenu(
+        store?.menuData?.filter(
+          (menu) =>
+            menu.categoryId ===
+            store?.Categories?.find((cat) => cat?.name === category)?.id
+        )
+      );
+    } else {
+      setListMenu(store?.menuData);
+    }
+  }, [category]);
+
+  console.log("store", store);
+
+  useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value; // Rename to avoid conflicts
+    console.log("value", searchValue);
+
+    if (searchValue) {
+      setListMenu(
+        store?.menuData?.filter((item) =>
+          Object.values(item)?.some((fieldValue) =>
+            fieldValue
+              ?.toString()
+              ?.toLowerCase()
+              ?.includes(searchValue?.toLowerCase())
+          )
+        )
+      );
+    } else {
+      setListMenu(store?.menuData);
+    }
+    setSearch(searchValue);
+  };
 
   return (
     <OrderSelectionBlock className="menu-page">
@@ -419,7 +464,10 @@ const MenuPage = () => {
         selectedItems={cartItems}
       />
       <CheckoutButton onGetMyCoffee={onGetMyCoffee} />
-      <SearchInputWithIcon />
+      <SearchInputWithIcon
+        handleSearchChange={handleSearchChange}
+        value={search}
+      />
       <MenuBox className="menu-box-container">
         <Box
           className="categories"
@@ -441,21 +489,21 @@ const MenuPage = () => {
           >
             All
           </Typography>
-          {coffeeAndDessertTypes?.map((f) => (
+          {store?.Categories?.map((f) => (
             <Typography
               className={
-                category === f ? "category active-category" : "category"
+                category === f?.name ? "category active-category" : "category"
               }
               onClick={() => {
-                setCategory(f);
+                setCategory(f?.name);
               }}
               style={{ fontSize: "14px" }}
             >
-              {f}
+              {f?.name}
             </Typography>
           ))}
         </Box>
-        {menuItems?.map((item) => (
+        {listMenu?.map((item) => (
           <ItemCard
             item={item}
             addItem={addItem}

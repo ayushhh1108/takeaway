@@ -11,19 +11,20 @@ import styled from "@emotion/styled";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { postSignInAPI } from "./action";
+import { postOTPAPI, postSignInAPI, postSignUpAPI } from "./action";
 import SignUpMobile from "../components/loginpageMobile";
 import { useLocation, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OTP from "../components/Otp/otp";
+import { toast } from "react-toastify";
+import LocalStorageManager from "../utils/local-storage-manager";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const [otpSection, setOTPSection] = useState(false);
-  const [OTPError, setOTPError] = useState("");
-  const [otp, setOtp] = useState("");
+  const [otpData, setOtpData] = useState();
   const isSignIn = location?.state?.isSignIn;
   const matches = useMediaQuery("(max-width:600px)");
   const mainBoxStyle = {
@@ -34,6 +35,7 @@ const LoginPage = () => {
     display: "flex",
     minHeight: "100vh",
   };
+
   const subLeftsideBox = {
     flexBasis: "50%",
     display: "flex",
@@ -90,25 +92,39 @@ const LoginPage = () => {
   });
 
   const validationSchema = yup.object({
-    phone: yup
+    name: yup.string("Enter your name number").required("Name is required"),
+    number: yup
       .string("Enter your phone number")
       .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
       .required("Phone number is required"),
   });
 
-  const handleOTPChange = (newValue) => {
-    setOtp(newValue);
-  };
+  useEffect(() => {
+    if (LocalStorageManager?.isUserAvailable()) {
+      toast.info("Already logged in.");
+      navigate("/menu");
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
-  const handleSignIn = async (values) => {
-    console.log("name", values);
+  const handleOTPChange = (newValue) => {
+    handleOTPSubmit(newValue?.join(""));
   };
 
   const handleSendCode = () => {
-    otpSection && navigate("/menu");
+    // otpSection && navigate("/menu");
     setOTPSection(true);
   };
-  console.log("otpSection", otpSection);
+
+  const handleFail = (values) => {
+    setOtpData({ number: values.number });
+  };
+
+  const handleOTPSubmit = (value) => {
+    value >= 0
+      ? dispatch(postOTPAPI({ ...otpData, otp: value }, navigate, handleFail))
+      : toast?.error("Enter OTP first");
+  };
 
   return matches ? (
     <SignUpMobile
@@ -122,13 +138,14 @@ const LoginPage = () => {
         <Box style={subLeftsideBox} className="sign-up-right">
           <Formik
             initialValues={{
-              phone: "",
+              number: "",
               name: "",
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              console.log("<OTP />", otpSection);
-              handleSendCode();
+              setOtpData({ number: values?.number });
+              dispatch(postSignUpAPI(values, handleSendCode));
+              console.log("<OTP />", values);
               // handleSignIn(values);
             }}
           >
@@ -172,21 +189,21 @@ const LoginPage = () => {
                             />
                           </Box>
                           <TextField
-                            id="phone"
+                            id="number"
                             label="Phone Number"
                             variant="standard"
-                            name="phone"
-                            value={values?.phone}
+                            name="number"
+                            value={values?.number}
                             className="input"
                             onChange={handlePhoneChange} // Use the custom handler
-                            error={touched.phone && Boolean(errors.phone)}
-                            helperText={touched.phone && errors.phone}
+                            error={touched.number && Boolean(errors.number)}
+                            helperText={touched.number && errors.number}
                             type="tel" // Set input type to 'tel' for numeric input
                             inputMode="numeric" // Ensures numeric keyboard on mobile devices
                           />
                         </>
                       ) : (
-                        <OTP />
+                        <OTP handleOtpChange={handleOTPChange} />
                       )}
                     </Box>
                     <Box className="submit-btn">
@@ -201,7 +218,7 @@ const LoginPage = () => {
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#000000", color: "#ffd585" }}
-                        onClick={otpSection ? handleSendCode : handleSubmit}
+                        onClick={otpSection ? handleOTPSubmit : handleSubmit}
                       >
                         {otpSection ? "Verify Phone Number" : "Send the Code"}
                       </Button>

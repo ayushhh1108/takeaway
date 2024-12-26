@@ -17,17 +17,19 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OTP from "../Otp/otp";
+import { postOTPAPI, postSignUpAPI } from "../../Pages/action";
 
 function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [popupForm, setPopupForm] = useState(false);
-  const [mainValues, setMainValues] = useState({ phone: "" });
+  const [otpData, setOtpData] = useState();
+  const [mainValues, setMainValues] = useState({ number: "" });
   const [click, setClick] = useState(false);
   const [validationSchema, setSchema] = useState(
     yup.object({
       name: yup.string("Enter your Name"),
-      phone: yup
+      number: yup
         .string("Enter your phone number")
         .matches(/^\d{10}$/, "Phone number must be exactly 10 digits")
         .required("Phone number is required"),
@@ -40,9 +42,8 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
     }
   }, []);
 
-  const [otp, setOtp] = useState("");
   const handleOTPChange = (newValue) => {
-    setOtp(newValue);
+    handleOTPSubmit(newValue?.join(""));
   };
 
   const textFieldHandler = (errors, touched, handleChange, values) => {
@@ -70,14 +71,14 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
         </Box>
         <Box style={{ width: "100%" }}>
           <TextField
-            id="phone"
-            name="phone"
+            id="number"
+            name="number"
             label="Phone Number"
             variant="standard"
             className="input-mobile"
             onChange={handlePhoneChange}
-            error={touched.phone && Boolean(errors.phone)}
-            helperText={touched.phone && errors.phone}
+            error={touched.number && Boolean(errors.number)}
+            helperText={touched.number && errors.number}
             type="tel"
             inputMode="numeric"
             value={values}
@@ -85,6 +86,16 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
         </Box>
       </>
     );
+  };
+
+  const handleFail = (values) => {
+    setOtpData({ number: values.number });
+  };
+
+  const handleOTPSubmit = (value) => {
+    value
+      ? dispatch(postOTPAPI({ ...otpData, otp: value }, navigate, handleFail))
+      : toast?.error("Enter OTP first");
   };
 
   const drawerBottom = () => {
@@ -111,14 +122,16 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
             initialValues={mainValues}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              handleSendCode();
+              setOtpData({ number: values?.number });
+              dispatch(postSignUpAPI(values, handleSendCode));
+              console.log("<OTP />", values);
               // login
               //   ? dispatch(postSignInAPI(values, navigate))
               //   : handleSignUp(values);
             }}
           >
             {({ errors, touched, handleSubmit, handleChange, values }) => (
-              <form onSubmit={handleSubmit}>
+              <form>
                 <Box className="login-form">
                   <Typography
                     variant="h6"
@@ -129,13 +142,13 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
                     Phone Verification
                   </Typography>
                   {otpSection ? (
-                    <OTP />
+                    <OTP handleOtpChange={handleOTPChange} />
                   ) : (
                     textFieldHandler(
                       errors,
                       touched,
                       handleChange,
-                      values?.phone
+                      values?.number
                     )
                   )}
                   <Box className="submit-box">
@@ -150,7 +163,7 @@ function SignUpMobile({ isSignIn, otpSection, handleSendCode }) {
                     <Button
                       variant="contained"
                       style={{ backgroundColor: "#000000", margin: "15px 0px" }}
-                      type="submit"
+                      onClick={otpSection ? handleOTPSubmit : handleSubmit}
                     >
                       {otpSection ? "Verify Phone Number" : "Send the Code"}
                     </Button>

@@ -3,7 +3,7 @@ import { Box, Typography, Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./index.css";
 
-const SearchInputWithIcon = () => {
+const SearchInputWithIcon = ({ handleSearchChange, value }) => {
   const ariaLabel = { "aria-label": "description" };
   return (
     <Box
@@ -12,7 +12,7 @@ const SearchInputWithIcon = () => {
         textAlign: "left",
         display: "flex",
         justifyContent: "space-between",
-        flexWrap:"wrap"
+        flexWrap: "wrap",
       }}
     >
       <Typography
@@ -30,6 +30,8 @@ const SearchInputWithIcon = () => {
         placeholder="Search"
         inputProps={ariaLabel}
         style={{ width: "200px" }}
+        onChange={handleSearchChange}
+        value={value}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon />

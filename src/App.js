@@ -13,6 +13,7 @@ import MenuPage from "./Pages/Menu";
 import OrderStatus from "./Pages/TrackPage";
 import HomePage from "./Pages/LandingPage";
 import PrivacyPolicy from "./Pages/AboutUsPage";
+import { ProtectedRoute } from "./utils/auth";
 
 const theme = createTheme({
   palette: {
@@ -40,8 +41,22 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/Terms-Conditions" element={<TermsConditions />} />
             <Route path="/Privacy-Policy" element={<PrivacyPolicy />} />
-            <Route path="/menu" element={<MenuPage />} />
-            <Route path="/track/:id" element={<OrderStatus />} />
+            <Route
+              path="/menu"
+              element={
+                <ProtectedRoute>
+                  <MenuPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/track/:id"
+              element={
+                <ProtectedRoute>
+                  <OrderStatus />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/login" exact element={<LoginPage />} />
           </Routes>
         </div>

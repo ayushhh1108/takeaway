@@ -12,7 +12,7 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
             {item?.name}
           </Typography>
           <span variant="p" className="cal">
-            {item?.cal}
+            {item?.calories} Kcal
           </span>
           <div
             style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
@@ -21,7 +21,11 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
             <span className="d-flex align-items-center blog-date-section">
               <span style={{ color: "green" }}> {item?.price} | </span>{" "}
               {/* <Image src={DateIcon} alt="share-icon" className="me-2" /> */}
-              <HistoryToggleOffIcon fontSize="small" className="time-icon" /> 15s
+              <HistoryToggleOffIcon
+                fontSize="small"
+                className="time-icon"
+              />{" "}
+              15s
             </span>
             <Box className="add-remove-button">
               {!alreadyInn?.count && (
@@ -55,12 +59,15 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
               )}
             </Box>
           </div>
-          {console.log("item", item)}
+          {console.log(
+            "item",
+            `${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`
+          )}
         </Box>
       </CardContent>
       <CardMedia
         sx={{ height: "100%", width: "125px" }}
-        image={item?.img}
+        image={`${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`}
         className="service-main-image"
         title="green iguana"
       />

@@ -1,17 +1,31 @@
+import { isNotthenSecondParameter } from "../utils/helper";
+
 const initialState = {
-    AccountData: {},
-}
+  AccountData: {},
+  menuData: null,
+  Categories: [],
+};
 
 const Reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case "POST_SIGNIN_API":
-            return {
-                ...state,
-                AccountData: action.payload
-            }
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case "POST_SIGNIN_API":
+      return {
+        ...state,
+        AccountData: action.payload,
+      };
+    case "GET_MENU_DATA":
+      return {
+        ...state,
+        menuData: isNotthenSecondParameter(action.payload?.data?.data, []),
+      };
+    case "GET_CATEGORIES":
+      return {
+        ...state,
+        Categories: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
 export default Reducer;
