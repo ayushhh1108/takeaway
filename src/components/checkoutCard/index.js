@@ -7,7 +7,7 @@ const CheckoutCard = ({ item, addItem, removeItem }) => {
     <Card className="Checkout-box card-main">
       <CardMedia
         sx={{ height: 85, width: 85 }}
-        image={item?.img}
+        image={`${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`}
         className="service-main-image"
         title="green iguana"
       />

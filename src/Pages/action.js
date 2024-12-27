@@ -96,11 +96,13 @@ export const sendMail = (payload) => async (dispatch) => {
 };
 
 export const postOrderCreate =
-  (payload, completeProcess) => async (dispatch) => {
+  (payload, completeProcess, setOrderId) => async (dispatch) => {
     try {
       const response = await api.post(apiEndPoints.orderCreate(), payload);
       // dispatch(signUp(response?.data));
       if (response?.data) {
+        console.log(response?.data?.data?.id, "response?.data");
+        setOrderId(response?.data?.data?.id);
         completeProcess();
         LocalStorageManager.clearCart();
       }
@@ -109,3 +111,17 @@ export const postOrderCreate =
       return data;
     }
   };
+
+export const getOrderData = (id) => async (dispatch) => {
+  try {
+    const response = await api.get(apiEndPoints.orderStatus(id));
+    if (response?.data) {
+      return response?.data?.data;
+    } else if (response?.response?.data?.message) {
+      toast.error(response?.response?.data?.message);
+    }
+  } catch (error) {
+    const { response: { data = {} } = {} } = error;
+    return data;
+  }
+};

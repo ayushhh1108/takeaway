@@ -24,7 +24,7 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
                 fontSize="small"
                 className="time-icon"
               />{" "}
-              15s
+              {item?.timeTake}m
             </span>
             <Box className="add-remove-button">
               {!alreadyInn?.count && (
@@ -58,7 +58,6 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
               )}
             </Box>
           </div>
-          
         </Box>
       </CardContent>
       <CardMedia

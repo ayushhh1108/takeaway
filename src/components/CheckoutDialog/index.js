@@ -29,6 +29,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [checkOutData, setCheckOutData] = useState();
   const [confirm, setConfirm] = useState(false);
   const [processDone, setProcessDone] = useState(false);
+  const [orderId, setOrderId] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
@@ -160,7 +161,8 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                         carNumber: vehicleNumber,
                         paymentMode: method,
                       },
-                      completeProcess
+                      completeProcess,
+                      setOrderId
                     )
                   );
                 }
@@ -234,7 +236,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   };
 
   const handleTrack = () => {
-    navigate("/track/erg");
+    navigate(`/track/${orderId}`);
     setProcessDone(false);
     setConfirm(false);
     handleClose(cartItems);

@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Box, Typography, Grid, Avatar } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getOrderData } from "../action";
 
 const OrderStatus = () => {
+  const params = useParams();
+  const dispatch = useDispatch();
+  const [orderStatus, setStatus] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const orderData = await dispatch(getOrderData(params?.id));
+        setStatus(orderData?.status);
+      } catch (error) {
+        console.error("Error fetching order data:", error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch, params?.id]);
+
   return (
     <Box
       sx={{
@@ -55,7 +75,11 @@ const OrderStatus = () => {
       {/* Status Steps */}
       <Grid container spacing={2} sx={{ maxWidth: 400 }}>
         {/* Step 1 */}
-        <Grid item xs={12}>
+        <Grid
+          item
+          xs={12}
+          className={orderStatus === "Preparing" ? "" : "incomplete-step"}
+        >
           <Box
             sx={{
               display: "flex",
@@ -93,7 +117,11 @@ const OrderStatus = () => {
         </Grid>
 
         {/* Step 2 */}
-        <Grid item xs={12} className="incomplete-step">
+        <Grid
+          item
+          xs={12}
+          className={orderStatus === "Preparing" ? "" : "incomplete-step"}
+        >
           <Box
             sx={{
               display: "flex",
@@ -132,7 +160,7 @@ const OrderStatus = () => {
         </Grid>
 
         {/* Step 3 */}
-        <Grid item xs={12} className="incomplete-step">
+        <Grid item xs={12} className={orderStatus === "Completed" ? "" : "incomplete-step"}>
           <Box
             sx={{
               display: "flex",
