@@ -1,74 +1,77 @@
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ItemCard from "../components/ItemCard";
-import SearchInputWithIcon from "../components/SearchBaar";
 import CheckoutButton from "../components/CheckoutButton";
 import "./menu.css";
 import CheckoutDialog from "../components/CheckoutDialog";
 import { GetCategories, getMenuData } from "./action";
+import { Input, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+const OrderSelectionBlock = styled(Box)({
+  backgroundColor: "white",
+  "& .heading-desc-box": {
+    color: "white",
+    width: "400px",
+    textAlign: "left",
+    paddingTop: "20px",
+    "& .main-h3": {
+      fontSize: "36px",
+      fontWeight: 700,
+    },
+    "& .desc": {
+      fontSize: "18px",
+      marginBottom: "80px",
+    },
+  },
+  "& .sign-up-right": {
+    flexWrap: "wrap",
+    "& .left-side-form": {
+      width: "80%",
+      display: "flex",
+      flexWrap: "wrap",
+      height: "300px",
+      alignContent: "space-around",
+      "& .input": {
+        width: "75%",
+        marginBottom: "12px",
+      },
+      "& .sign-up": {
+        fontWeight: 700,
+        marginBottom: "28px",
+        width: "100%",
+      },
+      "& .submit-btn": {
+        width: "100%",
+        "& .submit-text": {
+          fontSize: "15px",
+          marginBottom: "8px",
+        },
+        "& .signup-btn": {
+          fontSize: "15px",
+          fontWeight: 700,
+          textDecoration: "none",
+        },
+      },
+    },
+  },
+});
+
+const MenuBox = styled(Box)({
+  backgroundColor: "#0000002e",
+  borderRadius: "40px 0px 0% 0%",
+});
 
 const MenuPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
   const [cartItems, setCartItems] = useState([]);
   const [listMenu, setListMenu] = useState([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [checkoutDrawer, setCheckoutDrawer] = useState(false);
   const store = useSelector((store) => store?.Reducer);
-
-  const OrderSelectionBlock = styled(Box)({
-    backgroundColor: "white",
-    "& .heading-desc-box": {
-      color: "white",
-      width: "400px",
-      textAlign: "left",
-      paddingTop: "20px",
-      "& .main-h3": {
-        fontSize: "36px",
-        fontWeight: 700,
-      },
-      "& .desc": {
-        fontSize: "18px",
-        marginBottom: "80px",
-      },
-    },
-    "& .sign-up-right": {
-      flexWrap: "wrap",
-      "& .left-side-form": {
-        width: "80%",
-        display: "flex",
-        flexWrap: "wrap",
-        height: "300px",
-        alignContent: "space-around",
-        "& .input": {
-          width: "75%",
-          marginBottom: "12px",
-        },
-        "& .sign-up": {
-          fontWeight: 700,
-          marginBottom: "28px",
-          width: "100%",
-        },
-        "& .submit-btn": {
-          width: "100%",
-          "& .submit-text": {
-            fontSize: "15px",
-            marginBottom: "8px",
-          },
-          "& .signup-btn": {
-            fontSize: "15px",
-            fontWeight: 700,
-            textDecoration: "none",
-          },
-        },
-      },
-    },
-  });
 
   const addItem = (item) => {
     setCartItems((prevCart) => {
@@ -101,11 +104,6 @@ const MenuPage = () => {
       return prevCart.filter((cartItem) => cartItem.id !== itemId.id);
     });
   };
-
-  const MenuBox = styled(Box)({
-    backgroundColor: "#0000002e",
-    borderRadius: "40px 0px 0% 0%",
-  });
 
   const onGetMyCoffee = () => {
     setCheckoutDrawer(true);
@@ -145,23 +143,25 @@ const MenuPage = () => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const handleSearchChange = (e) => {
-    const searchValue = e.target.value;
-
-    if (searchValue) {
+  useEffect(() => {
+    if (search) {
       setListMenu(
         store?.menuData?.filter((item) =>
           Object.values(item)?.some((fieldValue) =>
             fieldValue
               ?.toString()
               ?.toLowerCase()
-              ?.includes(searchValue?.toLowerCase())
+              ?.includes(search?.toLowerCase())
           )
         )
       );
     } else {
       setListMenu(store?.menuData);
     }
+  }, [search]);
+
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
     setSearch(searchValue);
   };
 
@@ -175,10 +175,38 @@ const MenuPage = () => {
         selectedItems={cartItems}
       />
       <CheckoutButton onGetMyCoffee={onGetMyCoffee} />
-      <SearchInputWithIcon
-        handleSearchChange={handleSearchChange}
-        value={search}
-      />
+      <Box
+        style={{
+          padding: "30px",
+          textAlign: "left",
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
+        <Typography
+          style={{
+            fontSize: "26px",
+            display: "inline-block",
+            paddingLeft: "20px",
+          }}
+          className="kanit-bold"
+        >
+          Enso
+        </Typography>
+        <Input
+          className="search-input"
+          placeholder="Search"
+          style={{ width: "200px" }}
+          value={search}
+          onChange={handleSearchChange}
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+        />
+      </Box>
       <MenuBox className="menu-box-container">
         <Box
           className="categories"
