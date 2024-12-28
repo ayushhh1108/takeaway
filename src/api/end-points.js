@@ -5,6 +5,5 @@ export default {
   menuItems: () => `menu/menuItems`,
   orderCreate: () => `menu/order`,
   orderStatus: (id) => `menu/order/${id}`,
-  getUser: () => `addviewuser`,
-  getVideos: () => `getvideos`,
+  getOrders: (id) => `menu/orderHistory/${id}`,
 };

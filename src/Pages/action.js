@@ -125,3 +125,19 @@ export const getOrderData = (id) => async (dispatch) => {
     return data;
   }
 };
+
+export const getOrders = () => async (dispatch) => {
+  try {
+    const response = await api.get(
+      apiEndPoints.getOrders(LocalStorageManager.getUserData()?.id)
+    );
+    if (response?.data) {
+      return response?.data?.data;
+    } else if (response?.response?.data?.message) {
+      toast.error(response?.response?.data?.message);
+    }
+  } catch (error) {
+    const { response: { data = {} } = {} } = error;
+    return data;
+  }
+};

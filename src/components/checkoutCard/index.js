@@ -16,11 +16,11 @@ const CheckoutCard = ({ item, addItem, removeItem }) => {
           <Typography variant="h6" className="name">
             {item?.name}
           </Typography>
-          <span variant="p" className="cal">
-            {item?.cal}
-          </span>
           <span className="d-flex align-items-center blog-date-section">
-            <span style={{ color: "green" }}> {item?.price} </span>{" "}
+            <span style={{ color: "green" }}> {item?.price} | </span>{" "}
+            {/* <Image src={DateIcon} alt="share-icon" className="me-2" /> */}
+            <HistoryToggleOffIcon fontSize="small" className="time-icon" />{" "}
+            {item?.timeTake}m
           </span>
         </Box>
         <Box className="right-side-pricing">

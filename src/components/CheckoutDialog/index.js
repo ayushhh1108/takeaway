@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import "./index.css";
 import CheckoutCard from "../checkoutCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderConfirmation from "../OrderPlaced";
 import { useNavigate } from "react-router-dom";
 import LocalStorageManager from "../../utils/local-storage-manager";
@@ -26,6 +26,7 @@ import { postOrderCreate } from "../../Pages/action";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
+  console.log("selectedItemscartItems", selectedItems, cartItems);
   const [checkOutData, setCheckOutData] = useState();
   const [confirm, setConfirm] = useState(false);
   const [processDone, setProcessDone] = useState(false);
@@ -180,6 +181,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
         </Box>
       );
     } else {
+      console.log("cartItemscartItems", cartItems);
       return (
         <Box>
           <Typography className="main-title">
@@ -241,6 +243,10 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
     setConfirm(false);
     handleClose(cartItems);
   };
+
+  useEffect(() => {
+    setCartItems(selectedItems);
+  }, [selectedItems]);
 
   if (matches) {
     return (

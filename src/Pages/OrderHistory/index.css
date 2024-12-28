@@ -45,6 +45,13 @@
 .header-history {
   display: flex;
 }
+.order-box-container {
+  margin: 0px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+}
 
 @media (max-width: 600px) {
   .search-input {

@@ -14,6 +14,7 @@ import OrderStatus from "./Pages/TrackPage";
 import HomePage from "./Pages/LandingPage";
 import PrivacyPolicy from "./Pages/AboutUsPage";
 import { ProtectedRoute } from "./utils/auth";
+import HistoryPage from "./Pages/OrderHistory";
 
 const theme = createTheme({
   palette: {
@@ -48,6 +49,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <OrderStatus />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/order-history"
+              element={
+                <ProtectedRoute>
+                  <HistoryPage />
                 </ProtectedRoute>
               }
             />

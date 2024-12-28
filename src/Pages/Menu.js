@@ -66,6 +66,7 @@ const MenuBox = styled(Box)({
 
 const MenuPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [listMenu, setListMenu] = useState([]);
   const [category, setCategory] = useState("");
@@ -165,6 +166,8 @@ const MenuPage = () => {
     setSearch(searchValue);
   };
 
+  console.log("cartItems", cartItems);
+
   return (
     <OrderSelectionBlock className="menu-page">
       <CheckoutDialog
@@ -184,16 +187,27 @@ const MenuPage = () => {
           flexWrap: "wrap",
         }}
       >
-        <Typography
-          style={{
-            fontSize: "26px",
-            display: "inline-block",
-            paddingLeft: "20px",
-          }}
-          className="kanit-bold"
-        >
-          Enso
-        </Typography>
+        <Box className="header-history">
+          <Typography
+            style={{
+              fontSize: "26px",
+              display: "inline-block",
+              paddingLeft: "20px",
+            }}
+            className="kanit-bold"
+          >
+            Enso
+          </Typography>
+          <Typography
+            onClick={() => {
+              navigate("/order-history");
+            }}
+            className="category"
+            style={{ fontSize: "13px", marginLeft: "25px" }}
+          >
+            Order History
+          </Typography>
+        </Box>
         <Input
           className="search-input"
           placeholder="Search"
