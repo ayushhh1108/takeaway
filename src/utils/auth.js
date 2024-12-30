@@ -3,7 +3,6 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 export const ProtectedRoute = ({ children }) => {
-  // Check if token exists in local storage
   return LocalStorageManager?.isUserAvailable() ? (
     children
   ) : (
