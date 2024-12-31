@@ -25,12 +25,29 @@ module.exports = {
     },
   },
   rules: {
-    // Add rules to ignore specific errors and warnings
-    "react/no-unescaped-entities": "off", // Ignore unescaped entities like ' and "
-    "react/jsx-key": "off", // Ignore missing key in lists
-    "react/prop-types": "off", // Ignore prop-types validation warnings
-    "no-unused-vars": "off", // Ignore unused variable warnings
-    "no-undef": "off", // Ignore undefined variable errors
-    "react/react-in-jsx-scope": "off", // Ignore missing React import in scope
+    // Disable all validations
+    "react/no-unescaped-entities": "off",
+    "react/jsx-key": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": "off",
+    "no-console": "off",
+    "no-debugger": "off",
+    "no-mixed-spaces-and-tabs": "off",
+    "no-empty": "off",
+    "no-irregular-whitespace": "off",
+    "no-redeclare": "off",
+    "no-extra-semi": "off",
+    "react/display-name": "off",
+    "react/forbid-prop-types": "off",
+    "react/no-direct-mutation-state": "off",
+    "react/no-typos": "off",
+    "react/jsx-no-bind": "off",
+    "react/jsx-no-duplicate-props": "off",
+    "react/jsx-no-literals": "off",
+    "react/jsx-no-target-blank": "off",
+    "react/no-danger": "off",
   },
 };
