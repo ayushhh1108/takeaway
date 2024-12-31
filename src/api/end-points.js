@@ -6,4 +6,6 @@ export default {
   orderCreate: () => `menu/order`,
   orderStatus: (id) => `menu/order/${id}`,
   getOrders: (id) => `menu/orderHistory/${id}`,
+  createOrderPayment: () => `payment/createOrder`,
+  verifyOrderPayment: () => `payment/verifyOrder`,
 };

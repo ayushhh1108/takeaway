@@ -101,11 +101,85 @@ export const postOrderCreate =
       const response = await api.post(apiEndPoints.orderCreate(), payload);
       // dispatch(signUp(response?.data));
       if (response?.data) {
-        console.log(response?.data?.data?.id, "response?.data");
         setOrderId(response?.data?.data?.id);
-        completeProcess();
+        // completeProcess();
+        dispatch(
+          initiatePayment(
+            response?.data?.data?.id,
+            payload?.total,
+            completeProcess
+          )
+        );
         LocalStorageManager.clearCart();
       }
+    } catch (error) {
+      const { response: { data = {} } = {} } = error;
+      return data;
+    }
+  };
+
+const createOrder = async (orderId, amount) => {
+  try {
+    const response = await api.post(
+      apiEndPoints.createOrderPayment(),
+      JSON.stringify({ orderId, amount })
+    );
+
+    return response?.data?.data;
+  } catch (error) {
+    console.error("Error creating order:", error);
+  }
+};
+
+export const initiatePayment =
+  (orderId, amount, completeProcess) => async (dispatch) => {
+    try {
+      const order = await createOrder(orderId, amount);
+
+      if (!order) {
+        console.error("Order creation failed");
+        return;
+      }
+      const options = {
+        key: process.env.REACT_APP_RAJORPAY_API_KEY, // Replace with your Razorpay Key ID
+        amount: order.amount, // Amount in paisa
+        currency: order.currency,
+        name: "Takeaway Service",
+        description: "Order Payment",
+        order_id: order.id, // Razorpay order ID
+        handler: async (response) => {
+          // Step 3: Verify payment on the backend
+          const verifyResponse = await api.post(
+            apiEndPoints.verifyOrderPayment(),
+            JSON.stringify({ ...response, orderId })
+          );
+
+          console.log("response?.data", verifyResponse);
+          if (verifyResponse?.data?.data) {
+            toast.success("Payment successful");
+            completeProcess();
+          } else {
+            toast.error("Payment verification failed");
+          }
+        },
+        prefill: {
+          name: "Customer Name", // Prefill customer details
+          email: "customer@example.com",
+          contact: "1234567890",
+        },
+        notes: {
+          address: "Takeaway Address",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+      const rzp = new Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        console.error("Payment failed", response.error);
+        alert("Payment failed. Please try again.");
+      });
+      rzp.open();
     } catch (error) {
       const { response: { data = {} } = {} } = error;
       return data;
