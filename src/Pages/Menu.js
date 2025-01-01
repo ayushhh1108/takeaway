@@ -198,7 +198,7 @@ const MenuPage = () => {
             }}
             className="kanit-bold"
           >
-            Enso
+            House Of Huegah
           </Typography>
           {matches && (
             <Typography
