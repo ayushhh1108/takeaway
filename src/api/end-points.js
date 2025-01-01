@@ -8,4 +8,5 @@ export default {
   getOrders: (id) => `menu/orderHistory/${id}`,
   createOrderPayment: () => `payment/createOrder`,
   verifyOrderPayment: () => `payment/verifyOrder`,
+  getParkingData: () => `parking`,
 };

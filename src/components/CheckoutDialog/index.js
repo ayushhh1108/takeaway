@@ -23,6 +23,7 @@ import LocalStorageManager from "../../utils/local-storage-manager";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { postOrderCreate } from "../../Pages/action";
+import { api, apiEndPoints } from "../../api";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
@@ -34,6 +35,16 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
+  const [parkingData, setParkingData] = useState([]);
+
+  useEffect(() => {
+    const fetchParking = async () => {
+      const response = await api.get(apiEndPoints.getParkingData());
+      setParkingData(response?.data?.data);
+      console.log("responseresponseresponseresponse", response?.data?.data);
+    };
+    fetchParking();
+  }, []);
 
   const addItem = (item) => {
     setCartItems((prevCart) => {
@@ -84,7 +95,9 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
 
   const CartComponent = () => {
     const [vehicleNumber, setVehicleNumber] = useState("");
+    const [otherNotes, setOtherNotes] = useState("");
     const [method, setMethod] = React.useState("");
+    const [parking, setParking] = React.useState("");
 
     const handleChange = (event) => {
       setMethod(event.target.value);
@@ -119,6 +132,22 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
               value={vehicleNumber}
               onChange={handleVehicleNumberChange}
             />
+            <FormControl fullWidth style={{ marginBottom: "15px" }}>
+              <InputLabel id="demo-simple-select-label">Parking</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={parking}
+                label="parking"
+                onChange={(e) => {
+                  setParking(e.target.value);
+                }}
+              >
+                {parkingData?.map((i) => (
+                  <MenuItem value={i?.name}>{i?.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Payment Method
@@ -134,6 +163,15 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                 <MenuItem value={"online"}>ONLINE</MenuItem>
               </Select>
             </FormControl>
+            <TextField
+              id="standard-basic"
+              label="Other Notes"
+              className="vehical-no"
+              variant="standard"
+              style={{ marginTop: "10px" }}
+              value={otherNotes}
+              onChange={(e) => setOtherNotes(e.target.value)}
+            />
             <Typography
               className="confirm-button"
               onClick={() => {
@@ -145,6 +183,10 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                 }
                 if (!method) {
                   toast.error("Select Payment Method");
+                  error = true;
+                }
+                if (!parking) {
+                  toast.error("Select Parking");
                   error = true;
                 }
                 if (error) {
@@ -161,6 +203,8 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                         ...checkOutData,
                         carNumber: vehicleNumber,
                         paymentMode: method,
+                        parking,
+                        additionalNotes: otherNotes,
                       },
                       completeProcess,
                       setOrderId

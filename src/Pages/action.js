@@ -102,15 +102,18 @@ export const postOrderCreate =
       const response = await api.post(apiEndPoints.orderCreate(), payload);
       // dispatch(signUp(response?.data));
       if (response?.data) {
+        console.log("payload", payload?.paymentMode === "cash");
         setOrderId(response?.data?.data?.id);
-        // completeProcess();
-        dispatch(
-          initiatePayment(
-            response?.data?.data?.id,
-            payload?.total,
-            completeProcess
-          )
-        );
+
+        payload?.paymentMode !== "cash"
+          ? dispatch(
+              initiatePayment(
+                response?.data?.data?.id,
+                payload?.total,
+                completeProcess
+              )
+            )
+          : completeProcess();
         LocalStorageManager.clearCart();
       }
     } catch (error) {
