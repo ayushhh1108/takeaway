@@ -27,6 +27,7 @@ export const postSignUpAPI = (payload, handleSendCode) => async (dispatch) => {
     const response = await api.post(apiEndPoints.postSignUp(), payload);
     // dispatch(signUp(response?.data));
     if (response?.data) {
+      toast.info(`Temporary OTP is ${response?.data?.data?.otp}`);
       handleSendCode();
     }
   } catch (error) {
@@ -49,7 +50,7 @@ export const postOTPAPI =
           token: response?.data?.data?.token,
         };
         localStorage.setItem("user", JSON.stringify(data));
-        toast.success("Login successfully");
+        // toast.success("Login successfully");
         navigate("/menu");
       }
     } catch (error) {

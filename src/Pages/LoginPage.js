@@ -101,7 +101,6 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (LocalStorageManager?.isUserAvailable()) {
-      toast.info("Already logged in.");
       navigate("/menu");
     }
     window.scrollTo(0, 0);
