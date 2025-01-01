@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography, useMediaQuery } from "@mui/material";
 import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,6 +10,7 @@ import CheckoutDialog from "../components/CheckoutDialog";
 import { GetCategories, getMenuData } from "./action";
 import { Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import HistoryIcon from "@mui/icons-material/History";
 const OrderSelectionBlock = styled(Box)({
   backgroundColor: "white",
   "& .heading-desc-box": {
@@ -73,6 +74,7 @@ const MenuPage = () => {
   const [search, setSearch] = useState("");
   const [checkoutDrawer, setCheckoutDrawer] = useState(false);
   const store = useSelector((store) => store?.Reducer);
+  const matches = useMediaQuery("(max-width:600px)");
 
   const addItem = (item) => {
     setCartItems((prevCart) => {
@@ -198,28 +200,55 @@ const MenuPage = () => {
           >
             Enso
           </Typography>
-          <Typography
-            onClick={() => {
-              navigate("/order-history");
-            }}
-            className="category"
-            style={{ fontSize: "13px", marginLeft: "25px" }}
-          >
-            Order History
-          </Typography>
+          {matches && (
+            <Typography
+              onClick={() => {
+                navigate("/order-history");
+              }}
+              className="category"
+              style={{ fontSize: "13px", marginLeft: "25px" }}
+            >
+              <Tooltip title="History">
+                <HistoryIcon />
+              </Tooltip>
+            </Typography>
+          )}
         </Box>
-        <Input
-          className="search-input"
-          placeholder="Search"
-          style={{ width: "200px" }}
-          value={search}
-          onChange={handleSearchChange}
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          }
-        />
+        <Box
+          style={{
+            textAlign: "left",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+          }}
+          className="search-box"
+        >
+          <Input
+            className="search-input"
+            placeholder="Search"
+            style={{ width: "200px" }}
+            value={search}
+            onChange={handleSearchChange}
+            startAdornment={
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            }
+          />
+          {!matches && (
+            <Typography
+              onClick={() => {
+                navigate("/order-history");
+              }}
+              className="category"
+              style={{ fontSize: "13px", marginLeft: "25px" }}
+            >
+              <Tooltip title="History">
+                <HistoryIcon />
+              </Tooltip>
+            </Typography>
+          )}
+        </Box>
       </Box>
       <MenuBox className="menu-box-container">
         <Box

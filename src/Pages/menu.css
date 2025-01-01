@@ -49,8 +49,15 @@
 
 @media (max-width: 600px) {
   .search-input {
-    width: 90% !important;
+    width: 100% !important;
     margin-left: 0px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .header-history {
+    width: 100%;
+    justify-content: space-between;
   }
   .kanit-bold {
     padding-left: 0px !important;
