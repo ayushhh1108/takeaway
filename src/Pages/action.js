@@ -102,10 +102,10 @@ export const postOrderCreate =
       const response = await api.post(apiEndPoints.orderCreate(), payload);
       // dispatch(signUp(response?.data));
       if (response?.data) {
-        console.log("payload", payload?.paymentMode === "cash");
+        console.log("payload", payload?.paymentMode === "Cash");
         setOrderId(response?.data?.data?.id);
 
-        payload?.paymentMode !== "cash"
+        payload?.paymentMode !== "Cash"
           ? dispatch(
               initiatePayment(
                 response?.data?.data?.id,

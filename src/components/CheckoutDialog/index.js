@@ -159,8 +159,8 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                 label="method"
                 onChange={handleChange}
               >
-                <MenuItem value={"cash"}>CASH</MenuItem>
-                <MenuItem value={"online"}>ONLINE</MenuItem>
+                <MenuItem value={"Cash"}>CASH</MenuItem>
+                <MenuItem value={"Online"}>ONLINE</MenuItem>
               </Select>
             </FormControl>
             <TextField
