@@ -13,7 +13,7 @@ import MenuPage from "./Pages/Menu";
 import OrderStatus from "./Pages/TrackPage";
 import HomePage from "./Pages/LandingPage";
 import PrivacyPolicy from "./Pages/AboutUsPage";
-import { ProtectedRoute } from "./utils/auth";
+import { ProtectedRoute, RedirectToLink } from "./utils/auth";
 import HistoryPage from "./Pages/OrderHistory";
 
 const theme = createTheme({
@@ -33,9 +33,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Terms-Conditions" element={<TermsConditions />} />
-            <Route path="/Privacy-Policy" element={<PrivacyPolicy />} />
+            <Route path="/" element={<RedirectToLink />} />
+            <Route path="/Terms-Conditions" element={<RedirectToLink />} />
+            <Route path="/Privacy-Policy" element={<RedirectToLink />} />
             <Route
               path="/menu"
               element={

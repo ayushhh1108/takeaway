@@ -1,6 +1,6 @@
 import LocalStorageManager from "./local-storage-manager";
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const ProtectedRoute = ({ children }) => {
   return LocalStorageManager?.isUserAvailable() ? (
@@ -8,6 +8,14 @@ export const ProtectedRoute = ({ children }) => {
   ) : (
     <Navigate to="/login" />
   );
+};
+
+export const RedirectToLink = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/login");
+  }, []);
+  return;
 };
 
 export const getToken = () => {

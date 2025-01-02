@@ -26,7 +26,7 @@ const createAPI = () => {
       return response;
     },
     (error) => {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         return error;
       }
       return error;
