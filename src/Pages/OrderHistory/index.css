@@ -12,6 +12,11 @@
   -ms-overflow-style: none; /* For IE and Edge */
 }
 
+.menu-page .order-box-container {
+  min-height: calc(100vh - 110px) !important;
+  align-content: flex-start;
+}
+
 .categories::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
 }

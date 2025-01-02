@@ -208,7 +208,7 @@
 }
 
 .status-button {
-  width: 93px;
+  width: auto;
   color: #000000;
   border-radius: 8px;
   padding: 3px;
@@ -240,7 +240,7 @@
 
 .status {
   width: 100%;
-  padding: 2px;
+  padding: 3px 10px;
 }
 @media (max-width: 1200px) {
   .order-history-page .order-box-container .blog-box {
