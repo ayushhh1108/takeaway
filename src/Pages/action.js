@@ -1,13 +1,16 @@
 import { toast } from "react-toastify";
 import { api, apiEndPoints } from "../api";
-import axios, { Axios } from "axios";
 import LocalStorageManager from "../utils/local-storage-manager";
 
 export const GET_CATEGORIES = `GET_CATEGORIES`;
 export const CLEAR_CATEGORIES = "CLEAR_CATEGORIES";
 export const GET_MENU_DATA = "GET_MENU_DATA";
 export const CLEAR_MENU_DATA = "CLEAR_MENU_DATA";
+export const SET_LOADING = "SET_LOADING";
+export const STOP_LOADING = "STOP_LOADING";
 
+export const setLoading = () => ({ type: SET_LOADING });
+export const stopLoading = () => ({ type: STOP_LOADING });
 const getCategories = (payload) => {
   return {
     type: GET_CATEGORIES,
@@ -24,12 +27,13 @@ const getMenu = (payload) => {
 
 export const postSignUpAPI = (payload, handleSendCode) => async (dispatch) => {
   try {
+    dispatch(setLoading());
     const response = await api.post(apiEndPoints.postSignUp(), payload);
-    // dispatch(signUp(response?.data));
     if (response?.data) {
       toast.info(`Temporary OTP is ${response?.data?.data?.otp}`);
       handleSendCode();
     }
+    dispatch(stopLoading());
   } catch (error) {
     const { response: { data = {} } = {} } = error;
     return data;
@@ -39,6 +43,7 @@ export const postSignUpAPI = (payload, handleSendCode) => async (dispatch) => {
 export const postOTPAPI =
   (payload, navigate, handleFail) => async (dispatch) => {
     try {
+      dispatch(setLoading());
       const response = await api.post(apiEndPoints.postOTPverify(), payload);
       if (response?.response?.data?.message) {
         toast.error(response?.response?.data?.message);
@@ -50,16 +55,16 @@ export const postOTPAPI =
           token: response?.data?.data?.token,
         };
         localStorage.setItem("user", JSON.stringify(data));
-        // toast.success("Login successfully");
         navigate("/menu");
       }
+      dispatch(stopLoading());
     } catch (error) {
       const { response: { data = {} } = {} } = error;
       return data;
     }
   };
 
-export const GetCategories = () => async (dispatch) => {
+export const GetCategories = () => async (dispatch, getState) => {
   try {
     const response = await api.get(apiEndPoints.getCategories());
     dispatch(getCategories(response));
@@ -69,7 +74,7 @@ export const GetCategories = () => async (dispatch) => {
   }
 };
 
-export const getMenuData = () => async (dispatch) => {
+export const getMenuData = () => async (dispatch, getState) => {
   try {
     const response = await api.get(apiEndPoints.menuItems());
     if (response?.data) {
@@ -85,10 +90,12 @@ export const getMenuData = () => async (dispatch) => {
 
 export const sendMail = (payload) => async (dispatch) => {
   try {
+    dispatch(setLoading());
     const response = await api.post(apiEndPoints.sendMail(), payload);
     if (response.data.status === "success") {
-      toast.success("mail Sent successfully");
+      toast.success("Mail sent successfully");
     }
+    dispatch(stopLoading());
     return response?.data;
   } catch (error) {
     const { response: { data = {} } = {} } = error;
@@ -142,32 +149,31 @@ export const initiatePayment =
 
       if (!order) {
         console.error("Order creation failed");
+        dispatch(stopLoading());
         return;
       }
       const options = {
-        key: process.env.REACT_APP_RAJORPAY_API_KEY, // Replace with your Razorpay Key ID
-        amount: order.amount, // Amount in paisa
+        key: process.env.REACT_APP_RAJORPAY_API_KEY,
+        amount: order.amount,
         currency: order.currency,
         name: "Takeaway Service",
         description: "Order Payment",
-        order_id: order.id, // Razorpay order ID
+        order_id: order.id,
         handler: async (response) => {
-          // Step 3: Verify payment on the backend
           const verifyResponse = await api.post(
             apiEndPoints.verifyOrderPayment(),
             JSON.stringify({ ...response, orderId })
           );
-
-          console.log("response?.data", verifyResponse);
           if (verifyResponse?.data?.data) {
             toast.success("Payment successful");
             completeProcess();
           } else {
             toast.error("Payment verification failed");
           }
+          dispatch(stopLoading());
         },
         prefill: {
-          name: "Customer Name", // Prefill customer details
+          name: "Customer Name",
           email: "customer@example.com",
           contact: "1234567890",
         },
@@ -184,6 +190,7 @@ export const initiatePayment =
         alert("Payment failed. Please try again.");
       });
       rzp.open();
+      dispatch(stopLoading());
     } catch (error) {
       const { response: { data = {} } = {} } = error;
       return data;
@@ -192,12 +199,15 @@ export const initiatePayment =
 
 export const getOrderData = (id) => async (dispatch) => {
   try {
+    dispatch(setLoading());
     const response = await api.get(apiEndPoints.orderStatus(id));
     if (response?.data) {
+      dispatch(stopLoading());
       return response?.data?.data;
     } else if (response?.response?.data?.message) {
       toast.error(response?.response?.data?.message);
     }
+    dispatch(stopLoading());
   } catch (error) {
     const { response: { data = {} } = {} } = error;
     return data;
@@ -206,14 +216,17 @@ export const getOrderData = (id) => async (dispatch) => {
 
 export const getOrders = () => async (dispatch) => {
   try {
+    dispatch(setLoading());
     const response = await api.get(
       apiEndPoints.getOrders(LocalStorageManager.getUserData()?.id)
     );
     if (response?.data) {
+      dispatch(stopLoading());
       return response?.data?.data;
     } else if (response?.response?.data?.message) {
       toast.error(response?.response?.data?.message);
     }
+    dispatch(stopLoading());
   } catch (error) {
     const { response: { data = {} } = {} } = error;
     return data;

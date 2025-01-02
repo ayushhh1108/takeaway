@@ -1,0 +1,15 @@
+/* CafeLoader.css */
+.cafe-loader-container {
+  @apply flex flex-col items-center justify-center h-full w-full bg-gray-50;
+  width: 100%;
+  height: 100dvh;
+}
+
+.loader-gif {
+  width: 120px;
+  height: auto;
+}
+
+.loader-message {
+  @apply mt-4 text-gray-700 text-lg font-semibold;
+}

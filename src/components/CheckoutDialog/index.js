@@ -22,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import LocalStorageManager from "../../utils/local-storage-manager";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { postOrderCreate } from "../../Pages/action";
+import { postOrderCreate, setLoading } from "../../Pages/action";
 import { api, apiEndPoints } from "../../api";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
@@ -40,7 +40,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   useEffect(() => {
     const fetchParking = async () => {
       const response = await api.get(apiEndPoints.getParkingData());
-      setParkingData(response?.data?.data);
+      setParkingData(response?.data?.data ?? []);
       console.log("responseresponseresponseresponse", response?.data?.data);
     };
     fetchParking();
@@ -197,6 +197,8 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                     carNumber: vehicleNumber,
                     paymentMode: method,
                   });
+
+                  dispatch(setLoading());
                   dispatch(
                     postOrderCreate(
                       {

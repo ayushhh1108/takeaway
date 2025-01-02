@@ -23,6 +23,16 @@ const Reducer = (state = initialState, action) => {
         ...state,
         Categories: action.payload,
       };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loader: true,
+      };
+    case "STOP_LOADING":
+      return {
+        ...state,
+        loader: false,
+      };
     default:
       return state;
   }

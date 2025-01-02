@@ -7,7 +7,7 @@ import ItemCard from "../components/ItemCard";
 import CheckoutButton from "../components/CheckoutButton";
 import "./menu.css";
 import CheckoutDialog from "../components/CheckoutDialog";
-import { GetCategories, getMenuData } from "./action";
+import { GetCategories, getMenuData, setLoading, stopLoading } from "./action";
 import { Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import HistoryIcon from "@mui/icons-material/History";
@@ -118,10 +118,15 @@ const MenuPage = () => {
   };
 
   useEffect(() => {
-    dispatch(GetCategories());
-    dispatch(getMenuData());
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    setCartItems(cart ?? []);
+    const func = async () => {
+      dispatch(setLoading());
+      await dispatch(GetCategories());
+      await dispatch(getMenuData());
+      dispatch(stopLoading());
+      const cart = await JSON.parse(localStorage.getItem("cart"));
+      setCartItems(cart ?? []);
+    };
+    func();
   }, []);
 
   useEffect(() => {

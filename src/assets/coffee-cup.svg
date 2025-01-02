@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+    <g>
+        <!-- Cup Body -->
+        <path d="M20 24h24a4 4 0 0 1 4 4v12c0 6-4 10-10 10H26c-6 0-10-4-10-10V28a4 4 0 0 1 4-4z" fill="#F4A261"/>
+        <path d="M18 28c0-3.2 2.8-6 6-6h16c3.2 0 6 2.8 6 6v10H18V28z" fill="#E76F51"/>
+
+        <!-- Cup Handle -->
+        <path d="M44 28a6 6 0 0 1 6 6v4a6 6 0 0 1-6 6 1 1 0 1 1 0-2 4 4 0 0 0 4-4v-4a4 4 0 0 0-4-4 1 1 0 1 1 0-2z" fill="#F4A261"/>
+
+        <!-- Coffee -->
+        <rect x="20" y="22" width="24" height="4" rx="2" fill="#6A4C93"/>
+
+        <!-- Plate -->
+        <ellipse cx="32" cy="48" rx="20" ry="4" fill="#D4A373"/>
+    </g>
+</svg>
