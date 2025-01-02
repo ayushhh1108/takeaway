@@ -1,12 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCallback } from "react";
 import "./index.css";
 import { getOrders, setLoading, stopLoading } from "../action";
 import OrderCard from "../../components/OrderCard";
+import Loader from "../../components/Loader";
 
 const OrderSelectionBlock = styled(Box)({
   backgroundColor: "white",
@@ -63,25 +64,20 @@ const MenuBox = styled(Box)({
 });
 
 const HistoryPage = () => {
+  const store = useSelector((store) => store?.Reducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [listOrder, setListOrder] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch(setLoading()); // Explicitly set loading state
-        const ordersData = await dispatch(getOrders());
-        setListOrder(ordersData);
-        console.log("Fetched Orders Data:", ordersData);
-        dispatch(stopLoading()); // Explicitly stop loading state
-      } catch (error) {
-        console.error("Error fetching order data:", error);
-        dispatch(stopLoading()); // Stop loading even if error occurs
-      }
+    const func = async () => {
+      dispatch(setLoading()); // Explicitly set loading state
+      const ordersData = await dispatch(getOrders());
+      setListOrder(ordersData);
+      console.log("Fetched Orders Data:", store?.loader, listOrder, ordersData);
+      dispatch(stopLoading()); // Explicitly stop loading state
     };
-
-    fetchData();
+    func();
   }, [dispatch]);
 
   return (
@@ -117,10 +113,15 @@ const HistoryPage = () => {
           </Typography>
         </Box>
       </Box>
-      <MenuBox className="order-box-container">
-        {listOrder?.map((item) => (
-          <OrderCard item={item} />
-        ))}
+      <MenuBox
+        className="order-box-container"
+        style={store?.loader ? { padding: "0px" } : {}}
+      >
+        {!store?.loader ? (
+          listOrder?.map((item) => <OrderCard item={item} />)
+        ) : (
+          <Loader />
+        )}
       </MenuBox>
     </OrderSelectionBlock>
   );
