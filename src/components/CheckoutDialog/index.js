@@ -21,13 +21,14 @@ import OrderConfirmation from "../OrderPlaced";
 import { useNavigate } from "react-router-dom";
 import LocalStorageManager from "../../utils/local-storage-manager";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { postOrderCreate, setLoading } from "../../Pages/action";
+import { useDispatch, useSelector } from "react-redux";
+import { postOrderCreate, setLoading, stopLoading } from "../../Pages/action";
 import { api, apiEndPoints } from "../../api";
+import Loader from "../Loader";
 
 const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
   const [cartItems, setCartItems] = useState(selectedItems);
-  console.log("selectedItemscartItems", selectedItems, cartItems);
+  const store = useSelector((store) => store?.Reducer);
   const [checkOutData, setCheckOutData] = useState();
   const [confirm, setConfirm] = useState(false);
   const [processDone, setProcessDone] = useState(false);
@@ -119,7 +120,20 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
       }
     };
 
-    if (confirm) {
+    const handleTrack = () => {
+      navigate(`/track/${orderId}`);
+      setProcessDone(false);
+      setConfirm(false);
+      handleClose(cartItems);
+    };
+
+    useEffect(() => {
+      setCartItems(selectedItems);
+    }, [selectedItems]);
+
+    if (store?.loader) {
+      return <Loader />;
+    } else if (confirm) {
       return (
         <Box>
           <Typography className="main-title">Almost Done</Typography>
@@ -212,6 +226,7 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
                       setOrderId
                     )
                   );
+                  dispatch(stopLoading());
                 }
               }}
             >
@@ -282,17 +297,6 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
       );
     }
   };
-
-  const handleTrack = () => {
-    navigate(`/track/${orderId}`);
-    setProcessDone(false);
-    setConfirm(false);
-    handleClose(cartItems);
-  };
-
-  useEffect(() => {
-    setCartItems(selectedItems);
-  }, [selectedItems]);
 
   if (matches) {
     return (

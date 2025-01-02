@@ -1,12 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import "./index.css";
-import { Input, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { getOrders } from "../action";
+import { getOrders, setLoading, stopLoading } from "../action";
 import OrderCard from "../../components/OrderCard";
 
 const OrderSelectionBlock = styled(Box)({
@@ -71,15 +70,19 @@ const HistoryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        dispatch(setLoading()); // Explicitly set loading state
         const ordersData = await dispatch(getOrders());
         setListOrder(ordersData);
-        console.log("ordersDataordersDataordersData", ordersData);
+        console.log("Fetched Orders Data:", ordersData);
+        dispatch(stopLoading()); // Explicitly stop loading state
       } catch (error) {
         console.error("Error fetching order data:", error);
+        dispatch(stopLoading()); // Stop loading even if error occurs
       }
     };
+
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <OrderSelectionBlock className="order-history-page ">

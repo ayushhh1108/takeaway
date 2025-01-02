@@ -14,7 +14,7 @@ const OrderConfirmation = ({ handleTrack }) => {
     >
       <Card
         sx={{
-          width: "400px",
+          width: "100%",
           borderRadius: "16px",
           boxShadow: 3,
           padding: "16px",

@@ -3,7 +3,8 @@ import { isNotthenSecondParameter } from "../utils/helper";
 const initialState = {
   AccountData: {},
   menuData: null,
-  Categories: [],
+  Categories: null,
+  loader: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ const Reducer = (state = initialState, action) => {
         AccountData: action.payload,
       };
     case "GET_MENU_DATA":
+      console.log("action.payload?.data?.data", action.payload?.data?.data);
       return {
         ...state,
         menuData: isNotthenSecondParameter(action.payload?.data?.data, []),
@@ -24,15 +26,13 @@ const Reducer = (state = initialState, action) => {
         Categories: action.payload,
       };
     case "SET_LOADING":
-      return {
-        ...state,
-        loader: true,
-      };
+      console.log("Loader set to true");
+      return { ...state, loader: true };
+
     case "STOP_LOADING":
-      return {
-        ...state,
-        loader: false,
-      };
+      console.log("Loader set to false");
+      return { ...state, loader: false };
+
     default:
       return state;
   }

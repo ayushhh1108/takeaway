@@ -11,8 +11,10 @@ import { GetCategories, getMenuData, setLoading, stopLoading } from "./action";
 import { Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import HistoryIcon from "@mui/icons-material/History";
+import Loader from "../components/Loader";
 const OrderSelectionBlock = styled(Box)({
   backgroundColor: "white",
+  minHeight: "100dvh",
   "& .heading-desc-box": {
     color: "white",
     width: "400px",
@@ -119,10 +121,8 @@ const MenuPage = () => {
 
   useEffect(() => {
     const func = async () => {
-      dispatch(setLoading());
       await dispatch(GetCategories());
       await dispatch(getMenuData());
-      dispatch(stopLoading());
       const cart = await JSON.parse(localStorage.getItem("cart"));
       setCartItems(cart ?? []);
     };
@@ -173,7 +173,7 @@ const MenuPage = () => {
     setSearch(searchValue);
   };
 
-  console.log("cartItems", cartItems);
+  console.log("cartItems", store?.loader);
 
   return (
     <OrderSelectionBlock className="menu-page">
@@ -184,121 +184,126 @@ const MenuPage = () => {
         open={checkoutDrawer}
         selectedItems={cartItems}
       />
-      <CheckoutButton onGetMyCoffee={onGetMyCoffee} />
-      <Box
-        style={{
-          padding: "30px",
-          textAlign: "left",
-          display: "flex",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-        }}
-      >
-        <Box className="header-history">
-          <Typography
-            style={{
-              fontSize: "26px",
-              display: "inline-block",
-              paddingLeft: "20px",
-            }}
-            className="kanit-bold"
-          >
-            House Of Huegah
-          </Typography>
-          {matches && (
-            <Typography
-              onClick={() => {
-                navigate("/order-history");
-              }}
-              className="category"
-              style={{ fontSize: "13px", marginLeft: "25px" }}
-            >
-              <Tooltip title="History">
-                <HistoryIcon />
-              </Tooltip>
-            </Typography>
-          )}
-        </Box>
+      {store?.loader && <Loader />}
+      {!store?.loader && <CheckoutButton onGetMyCoffee={onGetMyCoffee} />}
+      {!store?.loader && (
         <Box
           style={{
+            padding: "30px",
             textAlign: "left",
             display: "flex",
             justifyContent: "space-between",
             flexWrap: "wrap",
           }}
-          className="search-box"
         >
-          <Input
-            className="search-input"
-            placeholder="Search"
-            style={{ width: "200px" }}
-            value={search}
-            onChange={handleSearchChange}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            }
-          />
-          {!matches && (
+          <Box className="header-history">
             <Typography
-              onClick={() => {
-                navigate("/order-history");
+              style={{
+                fontSize: "26px",
+                display: "inline-block",
+                paddingLeft: "20px",
               }}
-              className="category"
-              style={{ fontSize: "13px", marginLeft: "25px" }}
+              className="kanit-bold"
             >
-              <Tooltip title="History">
-                <HistoryIcon />
-              </Tooltip>
+              House Of Huegah
             </Typography>
-          )}
-        </Box>
-      </Box>
-      <MenuBox className="menu-box-container">
-        <Box
-          className="categories"
-          style={{
-            display: "flex",
-            overflowX: "auto",
-            padding: "10px",
-            gap: "10px",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          <Typography
-            onClick={() => {
-              setCategory("");
+            {matches && (
+              <Typography
+                onClick={() => {
+                  navigate("/order-history");
+                }}
+                className="category"
+                style={{ fontSize: "13px", marginLeft: "25px" }}
+              >
+                <Tooltip title="History">
+                  <HistoryIcon />
+                </Tooltip>
+              </Typography>
+            )}
+          </Box>
+          <Box
+            style={{
+              textAlign: "left",
+              display: "flex",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
-            className={!category ? "category active-category" : "category"}
-            style={{ fontSize: "14px" }}
+            className="search-box"
           >
-            All
-          </Typography>
-          {store?.Categories?.map((f) => (
-            <Typography
-              className={
-                category === f?.name ? "category active-category" : "category"
+            <Input
+              className="search-input"
+              placeholder="Search"
+              style={{ width: "200px" }}
+              value={search}
+              onChange={handleSearchChange}
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
               }
+            />
+            {!matches && (
+              <Typography
+                onClick={() => {
+                  navigate("/order-history");
+                }}
+                className="category"
+                style={{ fontSize: "13px", marginLeft: "25px" }}
+              >
+                <Tooltip title="History">
+                  <HistoryIcon />
+                </Tooltip>
+              </Typography>
+            )}
+          </Box>
+        </Box>
+      )}
+      {!store?.loader && (
+        <MenuBox className="menu-box-container">
+          <Box
+            className="categories"
+            style={{
+              display: "flex",
+              overflowX: "auto",
+              padding: "10px",
+              gap: "10px",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
+          >
+            <Typography
               onClick={() => {
-                setCategory(f?.name);
+                setCategory("");
               }}
+              className={!category ? "category active-category" : "category"}
               style={{ fontSize: "14px" }}
             >
-              {f?.name}
+              All
             </Typography>
+            {store?.Categories?.map((f) => (
+              <Typography
+                className={
+                  category === f?.name ? "category active-category" : "category"
+                }
+                onClick={() => {
+                  setCategory(f?.name);
+                }}
+                style={{ fontSize: "14px" }}
+              >
+                {f?.name}
+              </Typography>
+            ))}
+          </Box>
+          {listMenu?.map((item) => (
+            <ItemCard
+              item={item}
+              addItem={addItem}
+              removeItem={removeItem}
+              alreadyInn={cartItems?.find((i) => i.id === item.id)}
+            />
           ))}
-        </Box>
-        {listMenu?.map((item) => (
-          <ItemCard
-            item={item}
-            addItem={addItem}
-            removeItem={removeItem}
-            alreadyInn={cartItems?.find((i) => i.id === item.id)}
-          />
-        ))}
-      </MenuBox>
+        </MenuBox>
+      )}
     </OrderSelectionBlock>
   );
 };

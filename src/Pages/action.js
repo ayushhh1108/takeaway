@@ -66,7 +66,10 @@ export const postOTPAPI =
 
 export const GetCategories = () => async (dispatch, getState) => {
   try {
+    dispatch(setLoading());
     const response = await api.get(apiEndPoints.getCategories());
+
+    dispatch(stopLoading());
     dispatch(getCategories(response));
   } catch (error) {
     const { response: { data = {} } = {} } = error;
@@ -76,12 +79,14 @@ export const GetCategories = () => async (dispatch, getState) => {
 
 export const getMenuData = () => async (dispatch, getState) => {
   try {
+    dispatch(setLoading());
     const response = await api.get(apiEndPoints.menuItems());
     if (response?.data) {
       dispatch(getMenu(response));
     } else if (response?.response?.data?.message) {
       toast.error(response?.response?.data?.message);
     }
+    dispatch(stopLoading());
   } catch (error) {
     const { response: { data = {} } = {} } = error;
     return data;
@@ -121,6 +126,7 @@ export const postOrderCreate =
               )
             )
           : completeProcess();
+        payload?.paymentMode !== "Cash" && dispatch(stopLoading());
         LocalStorageManager.clearCart();
       }
     } catch (error) {
@@ -216,19 +222,24 @@ export const getOrderData = (id) => async (dispatch) => {
 
 export const getOrders = () => async (dispatch) => {
   try {
+    const userId = LocalStorageManager.getUserData()?.id;
+    if (!userId) {
+      console.warn("User ID is not available.");
+      return [];
+    }
+
     dispatch(setLoading());
-    const response = await api.get(
-      apiEndPoints.getOrders(LocalStorageManager.getUserData()?.id)
-    );
+    const response = await api.get(apiEndPoints.getOrders(userId));
+    dispatch(stopLoading());
+
     if (response?.data) {
-      dispatch(stopLoading());
       return response?.data?.data;
     } else if (response?.response?.data?.message) {
       toast.error(response?.response?.data?.message);
     }
-    dispatch(stopLoading());
   } catch (error) {
-    const { response: { data = {} } = {} } = error;
-    return data;
+    console.error("Error fetching orders:", error);
+    dispatch(stopLoading());
+    return [];
   }
 };

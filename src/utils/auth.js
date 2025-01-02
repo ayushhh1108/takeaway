@@ -15,7 +15,11 @@ export const RedirectToLink = () => {
   useEffect(() => {
     navigate("/login");
   }, []);
-  return;
+  return (
+    <>
+      <p>wait</p>
+    </>
+  );
 };
 
 export const getToken = () => {
