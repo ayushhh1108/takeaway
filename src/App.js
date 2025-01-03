@@ -9,9 +9,6 @@ import { ProtectedRoute, RedirectToLink } from "./utils/auth";
 import OrderStatus from "./Pages/TrackPage";
 import MenuPage from "./Pages/Menu";
 import HistoryPage from "./Pages/OrderHistory";
-import TermsConditions from "./Pages/TermsConditionsPage";
-import PrivacyPolicy from "./Pages/AboutUsPage";
-import HomePage from "./Pages/LandingPage";
 
 const theme = createTheme({
   palette: {
@@ -30,9 +27,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Terms-Conditions" element={<TermsConditions />} />
-            <Route path="/Privacy-Policy" element={<PrivacyPolicy />} />
+            <Route path="/" element={<RedirectToLink />} />
+            <Route path="/Terms-Conditions" element={<RedirectToLink />} />
+            <Route path="/Privacy-Policy" element={<RedirectToLink />} />
             <Route
               path="/menu"
               element={
