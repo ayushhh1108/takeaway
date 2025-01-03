@@ -12,6 +12,7 @@ import { Input, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import HistoryIcon from "@mui/icons-material/History";
 import Loader from "../components/Loader";
+import LocalStorageManager from "../utils/local-storage-manager";
 const OrderSelectionBlock = styled(Box)({
   backgroundColor: "white",
   minHeight: "100dvh",
@@ -84,13 +85,17 @@ const MenuPage = () => {
         (cartItem) => cartItem.id === item.id
       );
       if (existingItem) {
-        return prevCart.map((cartItem) =>
+        const existingData = prevCart.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, count: cartItem.count + 1 }
             : cartItem
         );
+        LocalStorageManager.setLocalStorage("cart", existingData);
+        return existingData;
       }
-      return [...prevCart, { ...item, count: 1 }];
+      const notExisting = [...prevCart, { ...item, count: 1 }];
+      LocalStorageManager.setLocalStorage("cart", notExisting);
+      return notExisting;
     });
   };
 
@@ -100,13 +105,19 @@ const MenuPage = () => {
         (cartItem) => cartItem.id === itemId.id
       );
       if (existingItem?.count > 1) {
-        return prevCart.map((cartItem) =>
+        const existingData = prevCart.map((cartItem) =>
           cartItem.id === itemId.id
             ? { ...cartItem, count: cartItem.count - 1 }
             : cartItem
         );
+        LocalStorageManager.setLocalStorage("cart", existingData);
+        return existingData;
       }
-      return prevCart.filter((cartItem) => cartItem.id !== itemId.id);
+      const notExisting = prevCart.filter(
+        (cartItem) => cartItem.id !== itemId.id
+      );
+      LocalStorageManager.setLocalStorage("cart", notExisting);
+      return notExisting;
     });
   };
 
@@ -115,6 +126,7 @@ const MenuPage = () => {
   };
 
   const handleClose = (latestCartItems) => {
+    console.log("latestCartItems", latestCartItems);
     setCheckoutDrawer(false);
     setCartItems(latestCartItems);
   };
@@ -146,10 +158,6 @@ const MenuPage = () => {
       setListMenu(store?.menuData);
     }
   }, [category]);
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
 
   useEffect(() => {
     if (search) {
