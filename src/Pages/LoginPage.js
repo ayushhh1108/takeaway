@@ -232,7 +232,7 @@ const LoginPage = () => {
                                 )
                               );
                             }}
-                            style={{ color: "#ffd585" }}
+                            style={{ cursor: "pointer" }}
                           >
                             {" "}
                             RESEND OTP
