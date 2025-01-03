@@ -121,7 +121,13 @@ const LoginPage = () => {
 
   const handleOTPSubmit = (value) => {
     value >= 0
-      ? dispatch(postOTPAPI({ ...otpData, otp: value }, navigate, handleFail))
+      ? dispatch(
+          postOTPAPI(
+            { number: otpData?.number, otp: value },
+            navigate,
+            handleFail
+          )
+        )
       : toast?.error("Enter OTP first");
   };
 
@@ -142,7 +148,8 @@ const LoginPage = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              setOtpData({ number: values?.number });
+              setOtpData(values);
+              console.log("otpData pallu", values);
               dispatch(postSignUpAPI(values, handleSendCode));
               // handleSignIn(values);
             }}
@@ -205,14 +212,42 @@ const LoginPage = () => {
                       )}
                     </Box>
                     <Box className="submit-btn">
-                      <Typography
-                        variant="body1"
-                        component="p"
-                        className="submit-text "
-                      >
-                        We need to register your phone number before getting
-                        <span style={{ color: "#000000" }}> started!</span>
-                      </Typography>
+                      {otpSection ? (
+                        <Typography
+                          variant="body1"
+                          component="p"
+                          className="submit-text "
+                        >
+                          Don't receive the OTP?
+                          <span
+                            onClick={() => {
+                              console.log("otpData pallu", values, otpData);
+                              dispatch(
+                                postSignUpAPI(
+                                  {
+                                    number: otpData?.number,
+                                    name: otpData?.name,
+                                  },
+                                  handleSendCode
+                                )
+                              );
+                            }}
+                            style={{ color: "#ffd585" }}
+                          >
+                            {" "}
+                            RESEND OTP
+                          </span>
+                        </Typography>
+                      ) : (
+                        <Typography
+                          variant="body1"
+                          component="p"
+                          className="submit-text "
+                        >
+                          We need to register your phone number before getting
+                          <span style={{ color: "#000000" }}> started!</span>
+                        </Typography>
+                      )}
                       <Button
                         variant="contained"
                         style={{ backgroundColor: "#000000", color: "#ffd585" }}
