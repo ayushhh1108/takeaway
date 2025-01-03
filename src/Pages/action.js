@@ -151,6 +151,7 @@ const createOrder = async (orderId, amount) => {
 export const initiatePayment =
   (orderId, amount, completeProcess) => async (dispatch) => {
     try {
+      const userData = LocalStorageManager.getUserData();
       const order = await createOrder(orderId, amount);
 
       if (!order) {
@@ -179,12 +180,8 @@ export const initiatePayment =
           dispatch(stopLoading());
         },
         prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
-          contact: "1234567890",
-        },
-        notes: {
-          address: "Takeaway Address",
+          name: userData?.name,
+          contact: userData?.number,
         },
         theme: {
           color: "#F37254",
