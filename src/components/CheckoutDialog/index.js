@@ -26,7 +26,13 @@ import { postOrderCreate, setLoading, stopLoading } from "../../Pages/action";
 import { api, apiEndPoints } from "../../api";
 import Loader from "../Loader";
 
-const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
+const CheckoutDialog = ({
+  handleClose,
+  open,
+  selectedItems,
+  addItem,
+  removeItem,
+}) => {
   const [cartItems, setCartItems] = useState(selectedItems);
   const store = useSelector((store) => store?.Reducer);
   const [checkOutData, setCheckOutData] = useState();
@@ -42,42 +48,53 @@ const CheckoutDialog = ({ handleClose, open, selectedItems }) => {
     const fetchParking = async () => {
       const response = await api.get(apiEndPoints.getParkingData());
       setParkingData(response?.data?.data ?? []);
-      console.log("responseresponseresponseresponse", response?.data?.data);
+      const cart = await JSON.parse(localStorage.getItem("cart"));
+      setCartItems(cart ?? []);
     };
     fetchParking();
   }, []);
 
-  const addItem = (item) => {
-    setCartItems((prevCart) => {
-      const existingItem = prevCart?.find(
-        (cartItem) => cartItem.id === item.id
-      );
-      if (existingItem) {
-        return prevCart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, count: cartItem.count + 1 }
-            : cartItem
-        );
-      }
-      return [...prevCart, { ...item, count: 1 }];
-    });
-  };
+  // const addItem = (item) => {
+  //   setCartItems((prevCart) => {
+  //     const existingItem = prevCart?.find(
+  //       (cartItem) => cartItem.id === item.id
+  //     );
+  //     if (existingItem) {
+  //       const existingData = prevCart.map((cartItem) =>
+  //         cartItem.id === item.id
+  //           ? { ...cartItem, count: cartItem.count + 1 }
+  //           : cartItem
+  //       );
+  //       LocalStorageManager.setLocalStorage("cart", existingData);
+  //       return existingData;
+  //     }
+  //     const notExisting = [...prevCart, { ...item, count: 1 }];
+  //     LocalStorageManager.setLocalStorage("cart", notExisting);
+  //     return notExisting;
+  //   });
+  // };
 
-  const removeItem = (itemId) => {
-    setCartItems((prevCart) => {
-      const existingItem = prevCart?.find(
-        (cartItem) => cartItem.id === itemId.id
-      );
-      if (existingItem?.count > 1) {
-        return prevCart.map((cartItem) =>
-          cartItem.id === itemId.id
-            ? { ...cartItem, count: cartItem.count - 1 }
-            : cartItem
-        );
-      }
-      return prevCart.filter((cartItem) => cartItem.id !== itemId.id);
-    });
-  };
+  // const removeItem = (itemId) => {
+  //   setCartItems((prevCart) => {
+  //     const existingItem = prevCart?.find(
+  //       (cartItem) => cartItem.id === itemId.id
+  //     );
+  //     if (existingItem?.count > 1) {
+  //       const existingData = prevCart.map((cartItem) =>
+  //         cartItem.id === itemId.id
+  //           ? { ...cartItem, count: cartItem.count - 1 }
+  //           : cartItem
+  //       );
+  //       LocalStorageManager.setLocalStorage("cart", existingData);
+  //       return existingData;
+  //     }
+  //     const notExisting = prevCart.filter(
+  //       (cartItem) => cartItem.id !== itemId.id
+  //     );
+  //     LocalStorageManager.setLocalStorage("cart", notExisting);
+  //     return notExisting;
+  //   });
+  // };
 
   const totalPrice = cartItems?.reduce(
     (total, item) => total + item.price * item.count,
