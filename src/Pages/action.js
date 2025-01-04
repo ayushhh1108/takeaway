@@ -111,7 +111,15 @@ export const sendMail = (payload) => async (dispatch) => {
 export const postOrderCreate =
   (payload, completeProcess, setOrderId) => async (dispatch) => {
     try {
-      const response = await api.post(apiEndPoints.orderCreate(), payload);
+      const date = new Date().toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      });
+      const response = await api.post(apiEndPoints.orderCreate(), {
+        ...payload,
+        date,
+      });
       // dispatch(signUp(response?.data));
       if (response?.data) {
         console.log("payload", payload?.paymentMode === "Cash");
