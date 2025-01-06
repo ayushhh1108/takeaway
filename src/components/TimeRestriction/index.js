@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Dialog } from "@mui/material";
 import "./TimeRestrictionDialog.css"; // Import the external CSS file
+import { useLocation } from "react-router-dom";
 
 const TimeRestrictionDialog = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const checkTime = () => {
@@ -15,7 +17,7 @@ const TimeRestrictionDialog = () => {
       }
     };
 
-    checkTime();
+    location?.pathname !== "/order-history" && checkTime();
   }, []);
 
   return (

@@ -58,6 +58,11 @@
   padding: 30px;
 }
 
+.order-history-page .order-box-container {
+  min-height: calc(100vh - 110px) !important;
+  align-content: flex-start;
+}
+
 @media (max-width: 600px) {
   .search-input {
     width: 90% !important;
