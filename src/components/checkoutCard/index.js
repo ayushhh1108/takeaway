@@ -5,13 +5,18 @@ import HistoryToggleOffIcon from "@mui/icons-material/HistoryToggleOff";
 const CheckoutCard = ({ item, addItem, removeItem }) => {
   return (
     <Card className="Checkout-box checkout-card-main">
-      <CardMedia
-        sx={{ height: 85, width: 85 }}
-        image={`${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`}
-        className="service-main-image"
-        title="green iguana"
-      />
-      <CardContent className="card-Content-Checkout">
+      {item?.image && (
+        <CardMedia
+          sx={{ height: 85, width: 85 }}
+          image={`${process.env.REACT_APP_API_BASE_URL}/uploads/${item?.image}`}
+          className="service-main-image"
+          title="green iguana"
+        />
+      )}
+      <CardContent
+        className="card-Content-Checkout"
+        style={!item?.image ? { width: "100%" } : {}}
+      >
         <Box className="description-box">
           <Typography variant="h6" className="name">
             {item?.name}
