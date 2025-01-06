@@ -26,37 +26,48 @@ const ItemCard = ({ item, addItem, removeItem, alreadyInn }) => {
               />{" "}
               {item?.timeTake}m
             </span>
-            <Box className="add-remove-button">
-              {!alreadyInn?.count && (
+            {item?.isSoldOut ? (
+              <Box className={"status-button bg-red-100"}>
                 <Typography
-                  onClick={() => addItem(item)}
-                  className="add-to-cart"
+                  onClick={() => console.log(item)}
+                  className={"status"}
                 >
-                  Add to Cart
+                  Sold Out
                 </Typography>
-              )}
-              {alreadyInn?.count && (
-                <Typography
-                  onClick={() => removeItem(item)}
-                  className="remove-button"
-                >
-                  -
-                </Typography>
-              )}
-              {alreadyInn?.count && (
-                <Typography className="count-cart">
-                  {alreadyInn?.count}
-                </Typography>
-              )}
-              {alreadyInn?.count && (
-                <Typography
-                  onClick={() => addItem(item)}
-                  className="add-button"
-                >
-                  +
-                </Typography>
-              )}
-            </Box>
+              </Box>
+            ) : (
+              <Box className="add-remove-button">
+                {!alreadyInn?.count && (
+                  <Typography
+                    onClick={() => addItem(item)}
+                    className="add-to-cart"
+                  >
+                    Add to Cart
+                  </Typography>
+                )}
+                {alreadyInn?.count && (
+                  <Typography
+                    onClick={() => removeItem(item)}
+                    className="remove-button"
+                  >
+                    -
+                  </Typography>
+                )}
+                {alreadyInn?.count && (
+                  <Typography className="count-cart">
+                    {alreadyInn?.count}
+                  </Typography>
+                )}
+                {alreadyInn?.count && (
+                  <Typography
+                    onClick={() => addItem(item)}
+                    className="add-button"
+                  >
+                    +
+                  </Typography>
+                )}
+              </Box>
+            )}
           </div>
         </Box>
       </CardContent>
