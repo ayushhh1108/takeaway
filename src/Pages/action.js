@@ -30,7 +30,7 @@ export const postSignUpAPI = (payload, handleSendCode) => async (dispatch) => {
     dispatch(setLoading());
     const response = await api.post(apiEndPoints.postSignUp(), payload);
     if (response?.data) {
-      toast.info(`Temporary OTP is ${response?.data?.data?.otp}`);
+      // toast.info(`Temporary OTP is ${response?.data?.data?.otp}`);
       handleSendCode();
     }
     dispatch(stopLoading());

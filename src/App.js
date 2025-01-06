@@ -9,6 +9,7 @@ import { ProtectedRoute, RedirectToLink } from "./utils/auth";
 import OrderStatus from "./Pages/TrackPage";
 import MenuPage from "./Pages/Menu";
 import HistoryPage from "./Pages/OrderHistory";
+import TimeRestrictionDialog from "./components/TimeRestriction";
 
 const theme = createTheme({
   palette: {
@@ -24,6 +25,7 @@ const theme = createTheme({
 function App() {
   return (
     <Router>
+      <TimeRestrictionDialog />
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>
