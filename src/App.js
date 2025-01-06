@@ -12,6 +12,7 @@ import HistoryPage from "./Pages/OrderHistory";
 import TermsConditions from "./Pages/TermsConditionsPage";
 import PrivacyPolicy from "./Pages/AboutUsPage";
 import HomePage from "./Pages/LandingPage";
+import TimeRestrictionDialog from "./components/TimeRestriction";
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,7 @@ const theme = createTheme({
 function App() {
   return (
     <Router>
+      <TimeRestrictionDialog />
       <ThemeProvider theme={theme}>
         <div className="App">
           <Routes>

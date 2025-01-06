@@ -1,0 +1,52 @@
+/* Container for the dialog */
+.dialog-container {
+  background-color: #ffffff; /* White background */
+  padding: 18px;
+  border-radius: 16px; /* Rounded corners like the image */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center; /* Center align text */
+  max-width: 400px;
+  margin: auto; /* Center horizontally */
+}
+
+/* Title styling */
+.dialog-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333; /* Dark text color */
+  margin-bottom: 16px;
+}
+
+/* Main content styling */
+.dialog-content {
+  font-size: 16px;
+  color: #555555; /* Slightly lighter text color */
+  margin-bottom: 16px;
+}
+
+/* Horizontal line styling */
+.dialog-divider {
+  border: 0;
+  border-top: 1px solid #dddddd; /* Light gray horizontal line */
+  margin: 11px -18px; /* Spacing around the line */
+}
+
+/* Thank you text styling */
+
+.dialog-thank-you {
+  font-size: 22px; /* Slightly larger font size */
+  font-weight: 600; /* Semi-bold */
+  font-style: italic; /* Italic style */
+  color: #333333; /* Darker color for emphasis */
+  margin-top: 8px;
+  font-family: "Brush Script MT", cursive; /* Add script-style font */
+}
+
+/* Special styling for "you!" */
+.thank-you-you {
+  font-family: inherit; /* Match main text font */
+  color: #ff6f61; /* Use a subtle orange-red color */
+}
+.time-restriction-dialog .MuiDialog-paper {
+  border-radius: 18px !important;
+}
